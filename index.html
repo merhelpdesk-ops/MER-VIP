@@ -124,6 +124,28 @@
             margin-bottom: 24px;
         }
     </style>
+
+    <!-- Tawk.to Script -->
+    <script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/6a98b24f839c9634454404d1/default';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+    </script>
+    <!-- End of Tawk.to Script -->
+
+    <script>
+        function openTawkChat() {
+            if (typeof Tawk_API !== 'undefined' && typeof Tawk_API.maximize === 'function') {
+                Tawk_API.maximize();
+            }
+        }
+    </script>
 </head>
 <body>
 
@@ -134,10 +156,10 @@
             <p>Official VIP Level & Fee Rate Details</p>
         </div>
 
-        <!-- 1. 中文服务 Banner (点击直接跳转客服服务) -->
+        <!-- 1. 中文服务 Banner (点击直接通过 JS 唤起 tawk.to 客服窗口) -->
         <div class="card">
             <div class="card-title">VIP 专属客服通道 (中文)</div>
-            <a href="https://service.mer.finance" target="_blank" rel="noopener noreferrer" class="clickable-banner" title="前往 MER VIP 客服通道">
+            <a href="javascript:void(0);" onclick="openTawkChat();" class="clickable-banner" title="前往 MER VIP 客服通道">
                 <div class="img-container">
                     <img src="./MERVIPServiceChinese.JPG" alt="MER VIP 客服通道 中文">
                 </div>
@@ -152,10 +174,10 @@
             </div>
         </div>
 
-        <!-- 3. 英文服务 Banner (点击直接跳转客服服务) -->
+        <!-- 3. 英文服务 Banner (点击直接通过 JS 唤起 tawk.to 客服窗口) -->
         <div class="card">
             <div class="card-title">VIP Service Portal (English)</div>
-            <a href="https://service.mer.finance" target="_blank" rel="noopener noreferrer" class="clickable-banner" title="Go to MER VIP Service Portal">
+            <a href="javascript:void(0);" onclick="openTawkChat();" class="clickable-banner" title="Go to MER VIP Service Portal">
                 <div class="img-container">
                     <img src="./MERVIPServiceEnglish.JPG" alt="MER VIP Service English" loading="lazy">
                 </div>
