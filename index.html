@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MER VIP FEE STRUCTURE</title>
     
-    <!-- Favicon 读取根目录下的 favicon.webp -->
+    <!-- Favicon -->
     <link rel="icon" href="./favicon.webp" type="image/webp" />
 
     <style>
@@ -125,13 +125,13 @@
         }
     </style>
 
-    <!-- Tawk.to Script -->
+    <!-- Start of Tawk.to Script -->
     <script type="text/javascript">
     var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
     (function(){
     var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
     s1.async=true;
-    s1.src='https://embed.tawk.to/6a98b24f839c9634454404d1/default';
+    s1.src='https://embed.tawk.to/6a98b268451e133447599dcc/1k1l6h0rv';
     s1.charset='UTF-8';
     s1.setAttribute('crossorigin','*');
     s0.parentNode.insertBefore(s1,s0);
@@ -141,8 +141,12 @@
 
     <script>
         function openTawkChat() {
-            if (typeof Tawk_API !== 'undefined' && typeof Tawk_API.maximize === 'function') {
-                Tawk_API.maximize();
+            if (typeof Tawk_API !== 'undefined') {
+                if (typeof Tawk_API.maximize === 'function') {
+                    Tawk_API.maximize();
+                } else if (typeof Tawk_API.toggle === 'function') {
+                    Tawk_API.toggle();
+                }
             }
         }
     </script>
@@ -156,7 +160,7 @@
             <p>Official VIP Level & Fee Rate Details</p>
         </div>
 
-        <!-- 1. 中文服务 Banner (点击直接通过 JS 唤起 tawk.to 客服窗口) -->
+        <!-- 1. 中文服务 Banner -->
         <div class="card">
             <div class="card-title">VIP 专属客服通道 (中文)</div>
             <a href="javascript:void(0);" onclick="openTawkChat();" class="clickable-banner" title="前往 MER VIP 客服通道">
@@ -174,7 +178,7 @@
             </div>
         </div>
 
-        <!-- 3. 英文服务 Banner (点击直接通过 JS 唤起 tawk.to 客服窗口) -->
+        <!-- 3. 英文服务 Banner -->
         <div class="card">
             <div class="card-title">VIP Service Portal (English)</div>
             <a href="javascript:void(0);" onclick="openTawkChat();" class="clickable-banner" title="Go to MER VIP Service Portal">
