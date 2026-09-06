@@ -2,50 +2,28 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MER VIP FEE STRUCTURE</title>
     
     <!-- Favicon -->
     <link rel="icon" href="./favicon.webp" type="image/webp" />
 
-    <!-- Google Fonts Inter with display=swap -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
     <style>
-        :root {
-            --bg-base: #06080d;
-            --card-bg: rgba(18, 24, 38, 0.75);
-            --card-border: rgba(255, 255, 255, 0.08);
-            --card-border-hover: rgba(59, 130, 246, 0.4);
-            --accent-blue: #3b82f6;
-            --accent-cyan: #06b6d4;
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --glass-glow: rgba(59, 130, 246, 0.15);
-        }
-
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            background-color: var(--bg-base);
-            background-image: 
-                radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 40%, rgba(6, 182, 212, 0.08) 0%, transparent 40%);
-            background-attachment: fixed;
-            color: var(--text-primary);
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #0b0f19;
+            color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            padding: 32px 16px 24px;
+            padding: 24px 16px;
         }
 
         .container {
@@ -53,109 +31,68 @@
             max-width: 720px;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 24px;
         }
 
-        /* 顶部 Header */
+        /* 顶部大标题栏 */
         .header {
             text-align: center;
+            margin-top: 12px;
             margin-bottom: 8px;
         }
 
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 4px 12px;
-            background: rgba(59, 130, 246, 0.1);
-            border: 1px solid rgba(59, 130, 246, 0.25);
-            border-radius: 9999px;
-            font-size: 12px;
-            font-weight: 600;
-            color: #60a5fa;
-            margin-bottom: 12px;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
-
-        .badge-dot {
-            width: 6px;
-            height: 6px;
-            background-color: #3b82f6;
-            border-radius: 50%;
-            box-shadow: 0 0 8px #3b82f6;
-        }
-
         .header h1 {
-            font-size: 28px;
+            font-size: 26px;
             font-weight: 800;
-            letter-spacing: -0.5px;
-            background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+            color: #4da3ff;
             margin-bottom: 6px;
         }
 
         .header p {
             font-size: 14px;
-            color: var(--text-secondary);
+            color: #8a99ad;
         }
 
-        /* 玻璃拟态 Card */
+        /* 暗黑科技感卡片容器 */
         .card {
-            background: var(--card-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--card-border);
+            background: linear-gradient(180deg, #131b2e 0%, #0d1424 100%);
+            border: 1px solid #1e2d4a;
             border-radius: 16px;
-            padding: 16px;
-            box-shadow: 0 16px 32px -10px rgba(0, 0, 0, 0.5);
-            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 18px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            transition: transform 0.2s ease, border-color 0.2s ease;
         }
 
         .card:hover {
-            border-color: var(--card-border-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6), 0 0 20px var(--glass-glow);
+            border-color: #2b457a;
         }
 
-        /* 标题栏 */
-        .card-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 12px;
-        }
-
+        /* 标题边条与字号 */
         .card-title {
             display: flex;
             align-items: center;
             gap: 8px;
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 600;
-            color: var(--text-primary);
+            color: #64b5f6;
+            margin-bottom: 14px;
         }
 
-        .title-indicator {
-            width: 3px;
-            height: 14px;
-            background: linear-gradient(180deg, var(--accent-blue), var(--accent-cyan));
+        .card-title::before {
+            content: "";
+            display: inline-block;
+            width: 4px;
+            height: 16px;
+            background-color: #0088ff;
             border-radius: 2px;
         }
 
-        .action-hint {
-            font-size: 12px;
-            color: var(--accent-blue);
-            font-weight: 500;
-        }
-
-        /* 图片容器 */
+        /* 图片样式与悬停效果 */
         .img-container {
             width: 100%;
-            border-radius: 10px;
             overflow: hidden;
-            background-color: rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
         }
 
         .img-container img {
@@ -163,74 +100,116 @@
             height: auto;
             display: block;
             border-radius: 10px;
-            transition: transform 0.3s ease, opacity 0.3s ease;
+            transition: opacity 0.2s ease, transform 0.2s ease;
         }
 
+        /* 可点击卡片加 hover 变亮反馈 */
         a.clickable-banner {
             display: block;
             text-decoration: none;
         }
 
         a.clickable-banner:hover img {
-            transform: scale(1.01);
             opacity: 0.95;
+            transform: scale(1.01);
+            cursor: pointer;
         }
 
-        /* Footer */
+        /* 底部版权 */
         .footer {
             text-align: center;
             font-size: 12px;
-            color: #475569;
+            color: #4a5a70;
             margin-top: 16px;
             margin-bottom: 24px;
         }
 
-        /* 悬浮客服按钮 */
+        /* Mobile Tawk Widget Styles */
         #mobile-tawk-widget {
-            display: flex;
+            display: none;
+        }
+
+        .tawk-mobile-native-hidden iframe[src="about:blank"][referrerpolicy="no-referrer-when-downgrade"][style*="max-width:124px"] {
+            transform: translateX(200vw) !important;
+            -webkit-transform: translateX(200vw) !important;
+        }
+
+        #mobile-tawk-widget.is-visible {
             align-items: center;
+            background: #1595ad;
+            border: 0;
+            border-radius: 50%;
+            bottom: calc(76px + env(safe-area-inset-bottom, 0px));
+            box-shadow: 0 5px 18px rgba(21, 149, 173, 0.4);
+            color: #fff;
+            cursor: grab;
+            display: flex;
+            height: 44px;
             justify-content: center;
+            padding: 0;
             position: fixed;
             right: 16px;
-            bottom: calc(24px + env(safe-area-inset-bottom, 0px));
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(135deg, #2563eb, #0891b2);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
-            color: #fff;
-            cursor: pointer;
-            z-index: 99999;
             touch-action: none;
             user-select: none;
+            width: 44px;
+            z-index: 2000000001;
         }
 
         #mobile-tawk-widget.is-dragging {
-            opacity: 0.9;
-            transform: scale(0.95);
+            cursor: grabbing;
+            transform: scale(0.96);
+        }
+
+        @media (min-width: 1001px) {
+            #mobile-tawk-widget.is-visible {
+                bottom: 30px;
+                right: 20px;
+            }
         }
     </style>
 
-    <!-- Tawk.to Script -->
+    <!-- Start of Tawk.to Script -->
     <script type="text/javascript">
         var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
         var mobileTawkPositionKey = 'merdex-mobile-tawk-position';
+        Tawk_API.autoStart = false;
+        document.documentElement.classList.add('tawk-mobile-native-hidden');
 
-        function openTawkChat() {
-            if (typeof Tawk_API.maximize === 'function') {
-                Tawk_API.maximize();
-            } else if (typeof Tawk_API.toggle === 'function') {
-                Tawk_API.toggle();
-            }
+        function isMobileTawkScreen() {
+            return true;
         }
 
-        document.addEventListener('DOMContentLoaded', function () {
-            var widget = document.getElementById('mobile-tawk-widget');
-            var drag = null;
-            if (!widget) return;
+        function getMobileTawkWidget() {
+            return document.getElementById('mobile-tawk-widget');
+        }
 
-            // 恢复悬浮球位置
+        function showMobileTawkWidget(visible) {
+            var widget = getMobileTawkWidget();
+            if (widget) widget.classList.toggle('is-visible', visible && isMobileTawkScreen());
+        }
+
+        function hideNativeMobileTawkWidget(hidden) {
+            document.documentElement.classList.toggle(
+                'tawk-mobile-native-hidden',
+                hidden && isMobileTawkScreen()
+            );
+        }
+
+        function clampMobileTawkWidget() {
+            var widget = getMobileTawkWidget();
+            if (!widget || !widget.classList.contains('is-visible')) return;
+            var rect = widget.getBoundingClientRect();
+            var left = Math.max(0, Math.min(rect.left, window.innerWidth - rect.width));
+            var top = Math.max(0, Math.min(rect.top, window.innerHeight - rect.height));
+            widget.style.left = left + 'px';
+            widget.style.top = top + 'px';
+            widget.style.right = 'auto';
+            widget.style.bottom = 'auto';
+        }
+
+        function restoreMobileTawkPosition() {
+            var widget = getMobileTawkWidget();
+            if (!widget) return;
             try {
                 var position = JSON.parse(localStorage.getItem(mobileTawkPositionKey));
                 if (position && Number.isFinite(position.left) && Number.isFinite(position.top)) {
@@ -239,7 +218,77 @@
                     widget.style.right = 'auto';
                     widget.style.bottom = 'auto';
                 }
-            } catch (e) { }
+            } catch (error) { }
+            requestAnimationFrame(clampMobileTawkWidget);
+        }
+
+        function syncMobileTawkWidget() {
+            if (typeof Tawk_API.showWidget !== 'function') return;
+            if (!isMobileTawkScreen()) {
+                hideNativeMobileTawkWidget(false);
+                showMobileTawkWidget(false);
+                if (typeof Tawk_API.start === 'function') Tawk_API.start({ showWidget: true });
+                Tawk_API.showWidget();
+                return;
+            }
+            var maximized = typeof Tawk_API.isChatMaximized === 'function' && Tawk_API.isChatMaximized();
+            if (maximized) {
+                hideNativeMobileTawkWidget(false);
+                showMobileTawkWidget(false);
+                Tawk_API.showWidget();
+            } else {
+                hideNativeMobileTawkWidget(true);
+                Tawk_API.hideWidget();
+                showMobileTawkWidget(true);
+                restoreMobileTawkPosition();
+            }
+        }
+
+        function openMobileTawkChat() {
+            showMobileTawkWidget(false);
+            hideNativeMobileTawkWidget(false);
+            if (typeof Tawk_API.start === 'function') Tawk_API.start({ showWidget: true });
+            if (typeof Tawk_API.showWidget === 'function') Tawk_API.showWidget();
+            if (typeof Tawk_API.maximize === 'function') Tawk_API.maximize();
+        }
+
+        function openTawkChat() {
+            openMobileTawkChat();
+        }
+
+        Tawk_API.onLoad = syncMobileTawkWidget;
+        Tawk_API.onChatMaximized = function () {
+            hideNativeMobileTawkWidget(false);
+            showMobileTawkWidget(false);
+        };
+        Tawk_API.onChatMinimized = function () {
+            if (isMobileTawkScreen()) {
+                hideNativeMobileTawkWidget(true);
+                Tawk_API.hideWidget();
+                showMobileTawkWidget(true);
+                restoreMobileTawkPosition();
+            }
+        };
+        Tawk_API.onChatHidden = function () {
+            if (isMobileTawkScreen()) {
+                hideNativeMobileTawkWidget(true);
+                showMobileTawkWidget(true);
+                restoreMobileTawkPosition();
+            }
+        };
+
+        window.addEventListener('resize', syncMobileTawkWidget);
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var widget = getMobileTawkWidget();
+            var drag = null;
+
+            if (!widget) return;
+
+            if (isMobileTawkScreen()) {
+                showMobileTawkWidget(true);
+                restoreMobileTawkPosition();
+            }
 
             widget.addEventListener('pointerdown', function (event) {
                 var rect = widget.getBoundingClientRect();
@@ -279,9 +328,9 @@
                             left: widget.offsetLeft,
                             top: widget.offsetTop
                         }));
-                    } catch (e) { }
+                    } catch (error) { }
                 } else {
-                    openTawkChat();
+                    openMobileTawkChat();
                 }
                 drag = null;
             });
@@ -289,6 +338,10 @@
             widget.addEventListener('pointercancel', function () {
                 widget.classList.remove('is-dragging');
                 drag = null;
+            });
+
+            widget.addEventListener('click', function (event) {
+                if (event.detail === 0) openMobileTawkChat();
             });
         });
 
@@ -301,28 +354,20 @@
             s0.parentNode.insertBefore(s1, s0);
         })();
     </script>
+    <!-- End of Tawk.to Script -->
 </head>
 <body>
 
     <div class="container">
-        <!-- 页头 -->
+        <!-- 页头大标题 -->
         <div class="header">
-            <div class="badge">
-                <span class="badge-dot"></span> Official Rates
-            </div>
             <h1>MER VIP FEE STRUCTURE</h1>
             <p>Official VIP Level & Fee Rate Details</p>
         </div>
 
         <!-- 1. 中文服务 Banner -->
         <div class="card">
-            <div class="card-header">
-                <div class="card-title">
-                    <span class="title-indicator"></span>
-                    VIP 专属客服通道 (中文)
-                </div>
-                <span class="action-hint">点击咨询 &rarr;</span>
-            </div>
+            <div class="card-title">VIP 专属客服通道 (中文)</div>
             <a href="javascript:void(0);" onclick="openTawkChat();" class="clickable-banner" title="前往 MER VIP 客服通道">
                 <div class="img-container">
                     <img src="./MERVIPServiceChinese.JPG" alt="MER VIP 客服通道 中文">
@@ -332,55 +377,42 @@
 
         <!-- 2. 中文费率表卡片 -->
         <div class="card">
-            <div class="card-header">
-                <div class="card-title">
-                    <span class="title-indicator"></span>
-                    中文版费率表
-                </div>
-            </div>
+            <div class="card-title">中文版费率表</div>
             <div class="img-container">
-                <img src="./MER-VIP-Chinese.JPG" alt="MER VIP 费率表 中文">
+                <img src="./MER-VIP-Chinese.JPG" alt="MER VIP 费率表 中文" loading="lazy">
             </div>
         </div>
 
         <!-- 3. 英文服务 Banner -->
         <div class="card">
-            <div class="card-header">
-                <div class="card-title">
-                    <span class="title-indicator"></span>
-                    VIP Service Portal (English)
-                </div>
-                <span class="action-hint">Click to Connect &rarr;</span>
-            </div>
+            <div class="card-title">VIP Service Portal (English)</div>
             <a href="javascript:void(0);" onclick="openTawkChat();" class="clickable-banner" title="Go to MER VIP Service Portal">
                 <div class="img-container">
-                    <img src="./MERVIPServiceEnglish.JPG" alt="MER VIP Service English">
+                    <img src="./MERVIPServiceEnglish.JPG" alt="MER VIP Service English" loading="lazy">
                 </div>
             </a>
         </div>
 
         <!-- 4. 英文费率表卡片 -->
         <div class="card">
-            <div class="card-header">
-                <div class="card-title">
-                    <span class="title-indicator"></span>
-                    Fee Structure (English)
-                </div>
-            </div>
+            <div class="card-title">English Version</div>
             <div class="img-container">
-                <img src="./MER-VIP-English.JPG" alt="MER VIP Fee Structure English">
+                <img src="./MER-VIP-English.JPG" alt="MER VIP Fee Structure English" loading="lazy">
             </div>
         </div>
 
         <!-- 页脚 -->
         <div class="footer">
-            &copy; MER VIP Finance. All rights reserved.
+            © MER VIP Finance. All rights reserved.
         </div>
     </div>
 
-    <!-- 悬浮客服按钮 -->
-    <button id="mobile-tawk-widget" type="button" aria-label="Chat widget" title="Chat widget">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" height="26" width="26">
+    <button id="mobile-tawk-widget" type="button" aria-label="Chat widget" title="Chat widget"
+        class="tawk-custom-color tawk-custom-border-color tawk-outline tawk-button tawk-button-circle tawk-button-large">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" height="32" width="32" role="img"
+            aria-labelledby="tawk-open-icon-title tawk-open-icon-description" class="tawk-min-chat-icon">
+            <title id="tawk-open-icon-title">Opens Chat</title>
+            <desc id="tawk-open-icon-description">This icon opens the chat window.</desc>
             <path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"
                 d="M400 26.2c-193.3 0-350 156.7-350 350 0 136.2 77.9 254.3 191.5 312.1 15.4 8.1 31.4 15.1 48.1 20.8l-16.5 63.5c-2 7.8 5.4 14.7 13 12.1l229.8-77.6c14.6-5.3 28.8-11.6 42.4-18.7C672 630.6 750 512.5 750 376.2c0-193.3-156.7-350-350-350zm211.1 510.7c-10.8 26.5-41.9 77.2-121.5 77.2-79.9 0-110.9-51-121.6-77.4-2.8-6.8 5-13.4 13.8-11.8 76.2 13.7 147.7 13 215.3.3 8.9-1.8 16.8 4.8 14 11.7z" />
         </svg>
