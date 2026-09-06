@@ -66,3 +66,655 @@
             letter-spacing: 1px;
             background: linear-gradient(90deg, #ffffff, var(--brand-cyan));
             -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-logo-icon {
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, var(--brand-primary), var(--brand-cyan));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            color: #fff;
+            font-size: 14px;
+            box-shadow: 0 0 12px var(--brand-glow);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-connect {
+            background: linear-gradient(135deg, var(--brand-primary), #0044cc);
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 14px var(--brand-glow);
+            transition: all 0.2s;
+        }
+
+        .btn-connect:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(0, 102, 255, 0.5);
+        }
+
+        /* 主容器 */
+        .container {
+            width: 100%;
+            max-width: 880px;
+            padding: 32px 16px 60px;
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        /* Hero 头部结构 */
+        .hero-section {
+            text-align: center;
+            padding: 20px 0 10px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(0, 102, 255, 0.12);
+            border: 1px solid rgba(0, 242, 254, 0.3);
+            color: var(--brand-cyan);
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            letter-spacing: 0.5px;
+        }
+
+        .hero-title {
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 10px;
+            background: linear-gradient(180deg, #ffffff 30%, #a2c2f5 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+            max-width: 500px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        /* 模块切换 Tab */
+        .tab-switcher {
+            display: flex;
+            background: rgba(18, 24, 38, 0.8);
+            border: 1px solid var(--panel-border);
+            padding: 4px;
+            border-radius: 12px;
+            width: fit-content;
+            margin: 0 auto;
+        }
+
+        .tab-btn {
+            padding: 8px 24px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .tab-btn.active {
+            background: var(--brand-primary);
+            color: #fff;
+            box-shadow: 0 2px 10px var(--brand-glow);
+        }
+
+        /* 核心卡片面板 */
+        .glass-card {
+            background: var(--panel-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--panel-border);
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title::before {
+            content: "";
+            width: 4px;
+            height: 16px;
+            background: linear-gradient(180deg, var(--brand-cyan), var(--brand-primary));
+            border-radius: 2px;
+        }
+
+        /* 原生 Web3 样式表格 */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            border-radius: 12px;
+            border: 1px solid var(--panel-border);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 13px;
+        }
+
+        th {
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--text-muted);
+            padding: 14px 16px;
+            font-weight: 600;
+            border-bottom: 1px solid var(--panel-border);
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 14px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: rgba(0, 102, 255, 0.05);
+        }
+
+        .vip-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 700;
+        }
+
+        .negative-fee {
+            color: var(--negative-green);
+            font-weight: 700;
+        }
+
+        /* 客服入口 Banner 卡片 */
+        .banner-card {
+            background: linear-gradient(135deg, rgba(0, 102, 255, 0.15) 0%, rgba(0, 242, 254, 0.05) 100%);
+            border: 1px solid rgba(0, 102, 255, 0.3);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .banner-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--brand-cyan);
+            box-shadow: 0 10px 30px rgba(0, 102, 255, 0.25);
+        }
+
+        .banner-info {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .banner-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .banner-desc {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .banner-btn {
+            background: var(--brand-primary);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            white-space: nowrap;
+            box-shadow: 0 4px 12px var(--brand-glow);
+        }
+
+        /* 图片预览区（备用） */
+        .img-card-container {
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--panel-border);
+        }
+
+        .img-card-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-muted);
+            padding: 20px 0;
+            border-top: 1px solid var(--panel-border);
+            margin-top: 20px;
+        }
+
+        /* Mobile Floating Widget */
+        #mobile-tawk-widget { display: none; }
+        .tawk-mobile-native-hidden iframe[src="about:blank"][referrerpolicy="no-referrer-when-downgrade"][style*="max-width:124px"] {
+            transform: translateX(200vw) !important;
+            -webkit-transform: translateX(200vw) !important;
+        }
+
+        #mobile-tawk-widget.is-visible {
+            align-items: center;
+            background: linear-gradient(135deg, var(--brand-primary), var(--brand-cyan));
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            bottom: calc(30px + env(safe-area-inset-bottom, 0px));
+            box-shadow: 0 8px 24px var(--brand-glow);
+            color: #fff;
+            cursor: grab;
+            display: flex;
+            height: 52px;
+            justify-content: center;
+            padding: 0;
+            position: fixed;
+            right: 20px;
+            touch-action: none;
+            user-select: none;
+            width: 52px;
+            z-index: 2000000001;
+        }
+
+        #mobile-tawk-widget.is-dragging {
+            cursor: grabbing;
+            transform: scale(0.95);
+        }
+    </style>
+
+    <script type="text/javascript">
+        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+        var mobileTawkPositionKey = 'merdex-mobile-tawk-position';
+        Tawk_API.autoStart = false;
+        document.documentElement.classList.add('tawk-mobile-native-hidden');
+
+        function isMobileTawkScreen() { return true; }
+        function getMobileTawkWidget() { return document.getElementById('mobile-tawk-widget'); }
+
+        function showMobileTawkWidget(visible) {
+            var widget = getMobileTawkWidget();
+            if (widget) widget.classList.toggle('is-visible', visible && isMobileTawkScreen());
+        }
+
+        function hideNativeMobileTawkWidget(hidden) {
+            document.documentElement.classList.toggle('tawk-mobile-native-hidden', hidden && isMobileTawkScreen());
+        }
+
+        function clampMobileTawkWidget() {
+            var widget = getMobileTawkWidget();
+            if (!widget || !widget.classList.contains('is-visible')) return;
+            var rect = widget.getBoundingClientRect();
+            var left = Math.max(0, Math.min(rect.left, window.innerWidth - rect.width));
+            var top = Math.max(0, Math.min(rect.top, window.innerHeight - rect.height));
+            widget.style.left = left + 'px';
+            widget.style.top = top + 'px';
+            widget.style.right = 'auto';
+            widget.style.bottom = 'auto';
+        }
+
+        function restoreMobileTawkPosition() {
+            var widget = getMobileTawkWidget();
+            if (!widget) return;
+            try {
+                var position = JSON.parse(localStorage.getItem(mobileTawkPositionKey));
+                if (position && Number.isFinite(position.left) && Number.isFinite(position.top)) {
+                    widget.style.left = position.left + 'px';
+                    widget.style.top = position.top + 'px';
+                    widget.style.right = 'auto';
+                    widget.style.bottom = 'auto';
+                }
+            } catch (error) { }
+            requestAnimationFrame(clampMobileTawkWidget);
+        }
+
+        function syncMobileTawkWidget() {
+            if (typeof Tawk_API.showWidget !== 'function') return;
+            if (!isMobileTawkScreen()) {
+                hideNativeMobileTawkWidget(false);
+                showMobileTawkWidget(false);
+                if (typeof Tawk_API.start === 'function') Tawk_API.start({ showWidget: true });
+                Tawk_API.showWidget();
+                return;
+            }
+            var maximized = typeof Tawk_API.isChatMaximized === 'function' && Tawk_API.isChatMaximized();
+            if (maximized) {
+                hideNativeMobileTawkWidget(false);
+                showMobileTawkWidget(false);
+                Tawk_API.showWidget();
+            } else {
+                hideNativeMobileTawkWidget(true);
+                Tawk_API.hideWidget();
+                showMobileTawkWidget(true);
+                restoreMobileTawkPosition();
+            }
+        }
+
+        function openMobileTawkChat() {
+            showMobileTawkWidget(false);
+            hideNativeMobileTawkWidget(false);
+            if (typeof Tawk_API.start === 'function') Tawk_API.start({ showWidget: true });
+            if (typeof Tawk_API.showWidget === 'function') Tawk_API.showWidget();
+            if (typeof Tawk_API.maximize === 'function') Tawk_API.maximize();
+        }
+
+        function openTawkChat() { openMobileTawkChat(); }
+
+        Tawk_API.onLoad = syncMobileTawkWidget;
+        Tawk_API.onChatMaximized = function () { hideNativeMobileTawkWidget(false); showMobileTawkWidget(false); };
+        Tawk_API.onChatMinimized = function () { if (isMobileTawkScreen()) { hideNativeMobileTawkWidget(true); Tawk_API.hideWidget(); showMobileTawkWidget(true); restoreMobileTawkPosition(); } };
+        Tawk_API.onChatHidden = function () { if (isMobileTawkScreen()) { hideNativeMobileTawkWidget(true); showMobileTawkWidget(true); restoreMobileTawkPosition(); } };
+
+        window.addEventListener('resize', syncMobileTawkWidget);
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var widget = getMobileTawkWidget();
+            var drag = null;
+            if (!widget) return;
+            if (isMobileTawkScreen()) { showMobileTawkWidget(true); restoreMobileTawkPosition(); }
+
+            widget.addEventListener('pointerdown', function (event) {
+                var rect = widget.getBoundingClientRect();
+                drag = { pointerId: event.pointerId, startX: event.clientX, startY: event.clientY, startLeft: rect.left, startTop: rect.top, moved: false };
+                widget.setPointerCapture(event.pointerId);
+                widget.classList.add('is-dragging');
+                event.preventDefault();
+            });
+
+            widget.addEventListener('pointermove', function (event) {
+                if (!drag || drag.pointerId !== event.pointerId) return;
+                var deltaX = event.clientX - drag.startX;
+                var deltaY = event.clientY - drag.startY;
+                if (Math.hypot(deltaX, deltaY) > 5) drag.moved = true;
+                var left = Math.max(0, Math.min(drag.startLeft + deltaX, window.innerWidth - widget.offsetWidth));
+                var top = Math.max(0, Math.min(drag.startTop + deltaY, window.innerHeight - widget.offsetHeight));
+                widget.style.left = left + 'px';
+                widget.style.top = top + 'px';
+                widget.style.right = 'auto';
+                widget.style.bottom = 'auto';
+            });
+
+            widget.addEventListener('pointerup', function (event) {
+                if (!drag || drag.pointerId !== event.pointerId) return;
+                widget.releasePointerCapture(event.pointerId);
+                widget.classList.remove('is-dragging');
+                if (drag.moved) {
+                    try { localStorage.setItem(mobileTawkPositionKey, JSON.stringify({ left: widget.offsetLeft, top: widget.offsetTop })); } catch (error) { }
+                } else { openMobileTawkChat(); }
+                drag = null;
+            });
+
+            widget.addEventListener('pointercancel', function () { widget.classList.remove('is-dragging'); drag = null; });
+            widget.addEventListener('click', function (event) { if (event.detail === 0) openMobileTawkChat(); });
+        });
+
+        (function () {
+            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/6a98b268451e133447599dcc/1k1l6h0rv';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            s0.parentNode.insertBefore(s1, s0);
+        })();
+
+        /* Tab 切换逻辑 */
+        function switchTab(lang) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.style.display = 'none');
+            
+            if(lang === 'zh') {
+                document.getElementById('tab-zh-btn').classList.add('active');
+                document.getElementById('tab-zh').style.display = 'block';
+            } else {
+                document.getElementById('tab-en-btn').classList.add('active');
+                document.getElementById('tab-en').style.display = 'block';
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="brand-logo">
+            <div class="brand-logo-icon">M</div>
+            MER VIP FINANCE
+        </div>
+        <div class="nav-actions">
+            <button class="btn-connect" onclick="openTawkChat();">VIP Support</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="hero-section">
+            <div class="hero-badge">✦ OFFICIAL VIP PROGRAM</div>
+            <h1 class="hero-title">MER VIP FEE STRUCTURE</h1>
+            <p class="hero-subtitle">享受阶梯式手续费优惠与专属 VIP 1 对 1 大户服务通道</p>
+        </div>
+
+        <div class="tab-switcher">
+            <button id="tab-zh-btn" class="tab-btn active" onclick="switchTab('zh')">中文版本 (ZH)</button>
+            <button id="tab-en-btn" class="tab-btn" onclick="switchTab('en')">English Version (EN)</button>
+        </div>
+
+        <div id="tab-zh" class="tab-content">
+            <div style="display: flex; flex-direction: column; gap: 24px;">
+                <a href="javascript:void(0);" onclick="openTawkChat();" class="banner-card">
+                    <div class="banner-info">
+                        <div class="banner-title">VIP 专属客服通道 (中文)</div>
+                        <div class="banner-desc">若交易量达标，请联系客服升级 VIP 等级</div>
+                    </div>
+                    <div class="banner-btn">联系客服 →</div>
+                </a>
+
+                <div class="glass-card">
+                    <div class="section-header">
+                        <div class="section-title">MERDEX VIP 费率制度</div>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>VIP 等级</th>
+                                    <th>交易量门槛 (30日累计 U)</th>
+                                    <th>吃单费率 (Taker)</th>
+                                    <th>挂单费率 (Maker)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="vip-badge">🥉 VIP 1</span></td>
+                                    <td>1M U</td>
+                                    <td>0.050%</td>
+                                    <td>0.015%</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="vip-badge">🥈 VIP 2</span></td>
+                                    <td>5M U</td>
+                                    <td>0.045%</td>
+                                    <td>0.012%</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="vip-badge">🥇 VIP 3</span></td>
+                                    <td>20M U</td>
+                                    <td>0.038%</td>
+                                    <td>0.008%</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="vip-badge">💎 VIP 4</span></td>
+                                    <td>200M U</td>
+                                    <td>0.032%</td>
+                                    <td class="negative-fee">-0.0003%</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="vip-badge">🎖️ VIP 5</span></td>
+                                    <td>270M U</td>
+                                    <td>0.028%</td>
+                                    <td class="negative-fee">-0.0007%</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="vip-badge">👑 VIP 6</span></td>
+                                    <td>760M U</td>
+                                    <td>0.024%</td>
+                                    <td class="negative-fee">-0.0015%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <div class="section-header">
+                        <div class="section-title">官方告示卡片</div>
+                    </div>
+                    <div class="img-card-container">
+                        <img src="./MER-VIP-Chinese.JPG" alt="MER VIP 费率表 中文" loading="lazy">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-en" class="tab-content" style="display: none;">
+            <div style="display: flex; flex-direction: column; gap: 24px;">
+                <a href="javascript:void(0);" onclick="openTawkChat();" class="banner-card">
+                    <div class="banner-info">
+                        <div class="banner-title">VIP Service Portal (English)</div>
+                        <div class="banner-desc">Contact MERHelpDesk to upgrade your VIP tier if threshold is reached.</div>
+                    </div>
+                    <div class="banner-btn">Contact Desk →</div>
+                </a>
+
+                <div class="glass-card">
+                    <div class="section-header">
+                        <div class="section-title">MERDEX VIP Fee Structure</div>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>VIP Level</th>
+                                    <th>Volume Threshold (30d Cumulative)</th>
+                                    <th>Taker Fee (%)</th>
+                                    <th>Maker Fee (%)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="vip-badge">🥉 VIP 1</span></td>
+                                    <td>1M U</td>
+                                    <td>0.050%</td>
+                                    <td>0.015%</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="vip-badge">🥈 VIP 2</span></td>
+                                    <td>5M U</td>
+                                    <td>0.045%</td>
+                                    <td>0.012%</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="vip-badge">🥇 VIP 3</span></td>
+                                    <td>20M U</td>
+                                    <td>0.038%</td>
+                                    <td>0.008%</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="vip-badge">💎 VIP 4</span></td>
+                                    <td>200M U</td>
+                                    <td>0.032%</td>
+                                    <td class="negative-fee">-0.0003%</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="vip-badge">🎖️ VIP 5</span></td>
+                                    <td>270M U</td>
+                                    <td>0.028%</td>
+                                    <td class="negative-fee">-0.0007%</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="vip-badge">👑 VIP 6</span></td>
+                                    <td>760M U</td>
+                                    <td>0.024%</td>
+                                    <td class="negative-fee">-0.0015%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <div class="section-header">
+                        <div class="section-title">Official Details View</div>
+                    </div>
+                    <div class="img-card-container">
+                        <img src="./MER-VIP-English.JPG" alt="MER VIP Fee Structure English" loading="lazy">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            © MER VIP Finance. All rights reserved. Official Institutional Trading Portal.
+        </div>
+    </div>
+
+    <button id="mobile-tawk-widget" type="button" aria-label="Chat widget" title="Chat widget">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" height="28" width="28">
+            <path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"
+                d="M400 26.2c-193.3 0-350 156.7-350 350 0 136.2 77.9 254.3 191.5 312.1 15.4 8.1 31.4 15.1 48.1 20.8l-16.5 63.5c-2 7.8 5.4 14.7 13 12.1l229.8-77.6c14.6-5.3 28.8-11.6 42.4-18.7C672 630.6 750 512.5 750 376.2c0-193.3-156.7-350-350-350zm211.1 510.7c-10.8 26.5-41.9 77.2-121.5 77.2-79.9 0-110.9-51-121.6-77.4-2.8-6.8 5-13.4 13.8-11.8 76.2 13.7 147.7 13 215.3.3 8.9-1.8 16.8 4.8 14 11.7z" />
+        </svg>
+    </button>
+
+</body>
+</html>
