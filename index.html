@@ -9,14 +9,13 @@
 
     <style>
         :root {
-            --bg-color: #030712;
-            --card-bg: rgba(15, 23, 42, 0.45);
-            --card-border: rgba(56, 189, 248, 0.15);
+            --bg-color: #050811;
+            --card-bg: rgba(13, 18, 36, 0.65);
+            --card-border: rgba(0, 242, 254, 0.18);
             --primary-accent: #00f2fe;
-            --secondary-accent: #3b82f6;
-            --neon-glow: #00f2fe;
-            --text-main: #f8fafc;
-            --text-sub: #94a3b8;
+            --secondary-accent: #4facfe;
+            --text-main: #f0f6fc;
+            --text-sub: #8b949e;
         }
 
         * {
@@ -33,12 +32,33 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            padding: 60px 16px;
+            padding: 40px 16px;
             position: relative;
             overflow-x: hidden;
         }
 
-        /* 赛博网格背景 */
+        /* 顶部科技感背景霓虹光晕 */
+        body::before {
+            content: '';
+            position: absolute;
+            top: -150px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(0, 242, 254, 0.25) 0%, rgba(79, 172, 254, 0.08) 50%, transparent 70%);
+            filter: blur(80px);
+            z-index: 0;
+            pointer-events: none;
+            animation: pulseGlow 6s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            0% { opacity: 0.6; transform: translateX(-50%) scale(0.95); }
+            100% { opacity: 1; transform: translateX(-50%) scale(1.05); }
+        }
+
+        /* 赛博网格底纹 */
         body::after {
             content: '';
             position: fixed;
@@ -47,40 +67,19 @@
             width: 100vw;
             height: 100vh;
             background-image: 
-                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 40px 40px;
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 32px 32px;
             z-index: 0;
             pointer-events: none;
-        }
-
-        /* 动态顶部霓虹光晕 */
-        body::before {
-            content: '';
-            position: absolute;
-            top: -100px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 700px;
-            height: 450px;
-            background: radial-gradient(circle, rgba(0, 242, 254, 0.25) 0%, rgba(59, 130, 246, 0.1) 45%, transparent 70%);
-            filter: blur(90px);
-            z-index: 0;
-            pointer-events: none;
-            animation: pulseGlow 8s ease-in-out infinite alternate;
-        }
-
-        @keyframes pulseGlow {
-            0% { opacity: 0.7; transform: translateX(-50%) scale(0.9); }
-            100% { opacity: 1; transform: translateX(-50%) scale(1.1); }
         }
 
         .container {
             width: 100%;
-            max-width: 800px;
+            max-width: 760px;
             display: flex;
             flex-direction: column;
-            gap: 32px;
+            gap: 28px;
             position: relative;
             z-index: 1;
         }
@@ -88,39 +87,37 @@
         /* 顶部大标题栏 */
         .header {
             text-align: center;
-            margin-bottom: 16px;
-            position: relative;
+            margin-bottom: 12px;
         }
 
         .header h1 {
-            font-size: 38px;
+            font-size: 32px;
             font-weight: 900;
-            letter-spacing: 3px;
-            background: linear-gradient(135deg, #ffffff 10%, #38bdf8 50%, #00f2fe 100%);
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #ffffff 0%, #4facfe 50%, #00f2fe 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            drop-shadow: 0 0 25px rgba(0, 242, 254, 0.4);
-            margin-bottom: 10px;
+            drop-shadow: 0 10px 30px rgba(0, 242, 254, 0.3);
+            margin-bottom: 8px;
             text-transform: uppercase;
         }
 
         .header p {
             font-size: 14px;
             color: var(--text-sub);
-            letter-spacing: 2px;
-            font-weight: 500;
-            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 400;
         }
 
-        /* 炫彩光效玻璃卡片 */
+        /* 玻璃拟态科技卡片 */
         .card {
             background: var(--card-bg);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--card-border);
-            border-radius: 24px;
-            padding: 24px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.12);
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
             overflow: hidden;
@@ -133,111 +130,82 @@
             left: -100%;
             width: 100%;
             height: 2px;
-            background: linear-gradient(90deg, transparent, var(--primary-accent), transparent);
-            transition: 0.5s;
+            background: linear-gradient(90deg, transparent, rgba(0, 242, 254, 0.8), transparent);
+            transition: 0.6s ease-in-out;
         }
 
         .card:hover::before {
             left: 100%;
-            transition: 0.7s ease-in-out;
         }
 
         .card:hover {
             border-color: rgba(0, 242, 254, 0.4);
-            transform: translateY(-6px) scale(1.01);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), 0 0 30px rgba(0, 242, 254, 0.2);
+            transform: translateY(-4px);
+            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.7), 0 0 25px rgba(0, 242, 254, 0.2);
         }
 
         /* 标题边条与字号 */
         .card-title {
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-size: 16px;
-            font-weight: 800;
-            color: #ffffff;
-            margin-bottom: 20px;
-            letter-spacing: 1px;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+            gap: 10px;
+            font-size: 15px;
+            font-weight: 700;
+            color: #e6edf3;
+            margin-bottom: 16px;
+            letter-spacing: 0.5px;
         }
 
         .card-title::before {
             content: "";
             display: inline-block;
             width: 4px;
-            height: 20px;
+            height: 18px;
             background: linear-gradient(180deg, var(--primary-accent), var(--secondary-accent));
             border-radius: 4px;
-            box-shadow: 0 0 12px var(--primary-accent);
+            box-shadow: 0 0 10px var(--primary-accent);
         }
 
-        /* 图片容器与微交互 */
+        /* 图片容器 */
         .img-container {
             width: 100%;
             overflow: hidden;
-            border-radius: 16px;
+            border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.08);
-            background: rgba(0, 0, 0, 0.4);
-            position: relative;
+            background: rgba(0, 0, 0, 0.3);
         }
 
         .img-container img {
             width: 100%;
             height: auto;
             display: block;
-            border-radius: 16px;
-            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
+            border-radius: 12px;
+            transition: all 0.4s ease;
         }
 
-        /* 点击 Banner 反馈 */
+        /* 可点击 Banner 反馈 */
         a.clickable-banner {
             display: block;
             text-decoration: none;
             position: relative;
-            border-radius: 16px;
-        }
-
-        a.clickable-banner::after {
-            content: 'VIEW VIP DETAILS';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.9);
-            background: rgba(0, 242, 254, 0.9);
-            color: #000;
-            font-weight: 800;
-            font-size: 13px;
-            padding: 10px 20px;
-            border-radius: 30px;
-            letter-spacing: 1px;
-            opacity: 0;
-            transition: all 0.3s ease;
-            pointer-events: none;
-            box-shadow: 0 0 20px rgba(0, 242, 254, 0.6);
         }
 
         a.clickable-banner:hover img {
-            transform: scale(1.03);
-            filter: brightness(0.85);
-        }
-
-        a.clickable-banner:hover::after {
-            opacity: 1;
-            transform: translate(-50%, -50%) scale(1);
+            transform: scale(1.02);
+            filter: brightness(1.08);
         }
 
         /* 底部版权 */
         .footer {
             text-align: center;
             font-size: 12px;
-            color: var(--text-sub);
-            margin-top: 30px;
+            color: #484f58;
+            margin-top: 20px;
             margin-bottom: 24px;
-            letter-spacing: 1.5px;
-            opacity: 0.7;
+            letter-spacing: 1px;
         }
 
-        /* Responsive Mobile Tawk Widget */
+        /* Mobile Tawk Widget Styles */
         #mobile-tawk-widget {
             display: none;
         }
@@ -245,37 +213,28 @@
         .tawk-mobile-native-hidden iframe {
             display: none !important;
         }
-
-        @media (max-width: 600px) {
-            .header h1 {
-                font-size: 28px;
-            }
-            .card {
-                padding: 16px;
-                border-radius: 18px;
-            }
-        }
     </style>
 </head>
 <body>
 
     <div class="container">
+        <!-- 保持原有结构，补全缺失的闭合标签与数据 -->
         <header class="header">
             <h1>MER VIP FEE STRUCTURE</h1>
-            <p>Exclusive Tiered Privilege System</p>
+            <p>EXCLUSIVE TIERED PRIVILEGE SYSTEM</p>
         </header>
 
         <main class="card">
             <div class="card-title">VIP MEMBER PRIVILEGES</div>
             <a href="#" class="clickable-banner">
                 <div class="img-container">
-                    <img src="./favicon.webp" alt="MER VIP Fee Structure" onerror="this.style.display='none'; this.parentNode.style.height='180px'; this.parentNode.style.background='linear-gradient(135deg, rgba(0,242,254,0.1), rgba(59,130,246,0.1))';" />
+                    <img src="./favicon.webp" alt="MER VIP Fee Structure" />
                 </div>
             </a>
         </main>
 
         <footer class="footer">
-            © 2026 MER VIP SYSTEM • ALL RIGHTS RESERVED
+            © 2026 MER VIP SYSTEM · ALL RIGHTS RESERVED
         </footer>
     </div>
 
