@@ -5,10 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MER VIP FEE STRUCTURE</title>
     
-    <!-- Favicon -->
     <link rel="icon" href="./favicon.webp" type="image/webp" />
 
     <style>
+        :root {
+            --bg-color: #030712;
+            --card-bg: rgba(15, 23, 42, 0.45);
+            --card-border: rgba(56, 189, 248, 0.15);
+            --primary-accent: #00f2fe;
+            --secondary-accent: #3b82f6;
+            --neon-glow: #00f2fe;
+            --text-main: #f8fafc;
+            --text-sub: #94a3b8;
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -16,407 +26,258 @@
         }
 
         body {
-            background-color: #0b0f19;
-            color: #ffffff;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            padding: 24px 16px;
+            padding: 60px 16px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* 赛博网格背景 */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* 动态顶部霓虹光晕 */
+        body::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 700px;
+            height: 450px;
+            background: radial-gradient(circle, rgba(0, 242, 254, 0.25) 0%, rgba(59, 130, 246, 0.1) 45%, transparent 70%);
+            filter: blur(90px);
+            z-index: 0;
+            pointer-events: none;
+            animation: pulseGlow 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            0% { opacity: 0.7; transform: translateX(-50%) scale(0.9); }
+            100% { opacity: 1; transform: translateX(-50%) scale(1.1); }
         }
 
         .container {
             width: 100%;
-            max-width: 720px;
+            max-width: 800px;
             display: flex;
             flex-direction: column;
-            gap: 24px;
+            gap: 32px;
+            position: relative;
+            z-index: 1;
         }
 
         /* 顶部大标题栏 */
         .header {
             text-align: center;
-            margin-top: 12px;
-            margin-bottom: 8px;
+            margin-bottom: 16px;
+            position: relative;
         }
 
         .header h1 {
-            font-size: 26px;
-            font-weight: 800;
-            letter-spacing: 1px;
-            color: #4da3ff;
-            margin-bottom: 6px;
+            font-size: 38px;
+            font-weight: 900;
+            letter-spacing: 3px;
+            background: linear-gradient(135deg, #ffffff 10%, #38bdf8 50%, #00f2fe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            drop-shadow: 0 0 25px rgba(0, 242, 254, 0.4);
+            margin-bottom: 10px;
+            text-transform: uppercase;
         }
 
         .header p {
             font-size: 14px;
-            color: #8a99ad;
+            color: var(--text-sub);
+            letter-spacing: 2px;
+            font-weight: 500;
+            text-transform: uppercase;
         }
 
-        /* 暗黑科技感卡片容器 */
+        /* 炫彩光效玻璃卡片 */
         .card {
-            background: linear-gradient(180deg, #131b2e 0%, #0d1424 100%);
-            border: 1px solid #1e2d4a;
-            border-radius: 16px;
-            padding: 18px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-            transition: transform 0.2s ease, border-color 0.2s ease;
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary-accent), transparent);
+            transition: 0.5s;
+        }
+
+        .card:hover::before {
+            left: 100%;
+            transition: 0.7s ease-in-out;
         }
 
         .card:hover {
-            border-color: #2b457a;
+            border-color: rgba(0, 242, 254, 0.4);
+            transform: translateY(-6px) scale(1.01);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), 0 0 30px rgba(0, 242, 254, 0.2);
         }
 
         /* 标题边条与字号 */
         .card-title {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 12px;
             font-size: 16px;
-            font-weight: 600;
-            color: #64b5f6;
-            margin-bottom: 14px;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
         }
 
         .card-title::before {
             content: "";
             display: inline-block;
             width: 4px;
-            height: 16px;
-            background-color: #0088ff;
-            border-radius: 2px;
+            height: 20px;
+            background: linear-gradient(180deg, var(--primary-accent), var(--secondary-accent));
+            border-radius: 4px;
+            box-shadow: 0 0 12px var(--primary-accent);
         }
 
-        /* 图片样式与悬停效果 */
+        /* 图片容器与微交互 */
         .img-container {
             width: 100%;
             overflow: hidden;
-            border-radius: 10px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(0, 0, 0, 0.4);
+            position: relative;
         }
 
         .img-container img {
             width: 100%;
             height: auto;
             display: block;
-            border-radius: 10px;
-            transition: opacity 0.2s ease, transform 0.2s ease;
+            border-radius: 16px;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
         }
 
-        /* 可点击卡片加 hover 变亮反馈 */
+        /* 点击 Banner 反馈 */
         a.clickable-banner {
             display: block;
             text-decoration: none;
+            position: relative;
+            border-radius: 16px;
+        }
+
+        a.clickable-banner::after {
+            content: 'VIEW VIP DETAILS';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            background: rgba(0, 242, 254, 0.9);
+            color: #000;
+            font-weight: 800;
+            font-size: 13px;
+            padding: 10px 20px;
+            border-radius: 30px;
+            letter-spacing: 1px;
+            opacity: 0;
+            transition: all 0.3s ease;
+            pointer-events: none;
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.6);
         }
 
         a.clickable-banner:hover img {
-            opacity: 0.95;
-            transform: scale(1.01);
-            cursor: pointer;
+            transform: scale(1.03);
+            filter: brightness(0.85);
+        }
+
+        a.clickable-banner:hover::after {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
         }
 
         /* 底部版权 */
         .footer {
             text-align: center;
             font-size: 12px;
-            color: #4a5a70;
-            margin-top: 16px;
+            color: var(--text-sub);
+            margin-top: 30px;
             margin-bottom: 24px;
+            letter-spacing: 1.5px;
+            opacity: 0.7;
         }
 
-        /* Mobile Tawk Widget Styles */
+        /* Responsive Mobile Tawk Widget */
         #mobile-tawk-widget {
             display: none;
         }
 
-        .tawk-mobile-native-hidden iframe[src="about:blank"][referrerpolicy="no-referrer-when-downgrade"][style*="max-width:124px"] {
-            transform: translateX(200vw) !important;
-            -webkit-transform: translateX(200vw) !important;
+        .tawk-mobile-native-hidden iframe {
+            display: none !important;
         }
 
-        #mobile-tawk-widget.is-visible {
-            align-items: center;
-            background: #1595ad;
-            border: 0;
-            border-radius: 50%;
-            bottom: calc(76px + env(safe-area-inset-bottom, 0px));
-            box-shadow: 0 5px 18px rgba(21, 149, 173, 0.4);
-            color: #fff;
-            cursor: grab;
-            display: flex;
-            height: 44px;
-            justify-content: center;
-            padding: 0;
-            position: fixed;
-            right: 16px;
-            touch-action: none;
-            user-select: none;
-            width: 44px;
-            z-index: 2000000001;
-        }
-
-        #mobile-tawk-widget.is-dragging {
-            cursor: grabbing;
-            transform: scale(0.96);
-        }
-
-        @media (min-width: 1001px) {
-            #mobile-tawk-widget.is-visible {
-                bottom: 30px;
-                right: 20px;
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 28px;
+            }
+            .card {
+                padding: 16px;
+                border-radius: 18px;
             }
         }
     </style>
-
-    <!-- Start of Tawk.to Script -->
-    <script type="text/javascript">
-        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
-        var mobileTawkPositionKey = 'merdex-mobile-tawk-position';
-        Tawk_API.autoStart = false;
-        document.documentElement.classList.add('tawk-mobile-native-hidden');
-
-        function isMobileTawkScreen() {
-            return true;
-        }
-
-        function getMobileTawkWidget() {
-            return document.getElementById('mobile-tawk-widget');
-        }
-
-        function showMobileTawkWidget(visible) {
-            var widget = getMobileTawkWidget();
-            if (widget) widget.classList.toggle('is-visible', visible && isMobileTawkScreen());
-        }
-
-        function hideNativeMobileTawkWidget(hidden) {
-            document.documentElement.classList.toggle(
-                'tawk-mobile-native-hidden',
-                hidden && isMobileTawkScreen()
-            );
-        }
-
-        function clampMobileTawkWidget() {
-            var widget = getMobileTawkWidget();
-            if (!widget || !widget.classList.contains('is-visible')) return;
-            var rect = widget.getBoundingClientRect();
-            var left = Math.max(0, Math.min(rect.left, window.innerWidth - rect.width));
-            var top = Math.max(0, Math.min(rect.top, window.innerHeight - rect.height));
-            widget.style.left = left + 'px';
-            widget.style.top = top + 'px';
-            widget.style.right = 'auto';
-            widget.style.bottom = 'auto';
-        }
-
-        function restoreMobileTawkPosition() {
-            var widget = getMobileTawkWidget();
-            if (!widget) return;
-            try {
-                var position = JSON.parse(localStorage.getItem(mobileTawkPositionKey));
-                if (position && Number.isFinite(position.left) && Number.isFinite(position.top)) {
-                    widget.style.left = position.left + 'px';
-                    widget.style.top = position.top + 'px';
-                    widget.style.right = 'auto';
-                    widget.style.bottom = 'auto';
-                }
-            } catch (error) { }
-            requestAnimationFrame(clampMobileTawkWidget);
-        }
-
-        function syncMobileTawkWidget() {
-            if (typeof Tawk_API.showWidget !== 'function') return;
-            if (!isMobileTawkScreen()) {
-                hideNativeMobileTawkWidget(false);
-                showMobileTawkWidget(false);
-                if (typeof Tawk_API.start === 'function') Tawk_API.start({ showWidget: true });
-                Tawk_API.showWidget();
-                return;
-            }
-            var maximized = typeof Tawk_API.isChatMaximized === 'function' && Tawk_API.isChatMaximized();
-            if (maximized) {
-                hideNativeMobileTawkWidget(false);
-                showMobileTawkWidget(false);
-                Tawk_API.showWidget();
-            } else {
-                hideNativeMobileTawkWidget(true);
-                Tawk_API.hideWidget();
-                showMobileTawkWidget(true);
-                restoreMobileTawkPosition();
-            }
-        }
-
-        function openMobileTawkChat() {
-            showMobileTawkWidget(false);
-            hideNativeMobileTawkWidget(false);
-            if (typeof Tawk_API.start === 'function') Tawk_API.start({ showWidget: true });
-            if (typeof Tawk_API.showWidget === 'function') Tawk_API.showWidget();
-            if (typeof Tawk_API.maximize === 'function') Tawk_API.maximize();
-        }
-
-        function openTawkChat() {
-            openMobileTawkChat();
-        }
-
-        Tawk_API.onLoad = syncMobileTawkWidget;
-        Tawk_API.onChatMaximized = function () {
-            hideNativeMobileTawkWidget(false);
-            showMobileTawkWidget(false);
-        };
-        Tawk_API.onChatMinimized = function () {
-            if (isMobileTawkScreen()) {
-                hideNativeMobileTawkWidget(true);
-                Tawk_API.hideWidget();
-                showMobileTawkWidget(true);
-                restoreMobileTawkPosition();
-            }
-        };
-        Tawk_API.onChatHidden = function () {
-            if (isMobileTawkScreen()) {
-                hideNativeMobileTawkWidget(true);
-                showMobileTawkWidget(true);
-                restoreMobileTawkPosition();
-            }
-        };
-
-        window.addEventListener('resize', syncMobileTawkWidget);
-
-        document.addEventListener('DOMContentLoaded', function () {
-            var widget = getMobileTawkWidget();
-            var drag = null;
-
-            if (!widget) return;
-
-            if (isMobileTawkScreen()) {
-                showMobileTawkWidget(true);
-                restoreMobileTawkPosition();
-            }
-
-            widget.addEventListener('pointerdown', function (event) {
-                var rect = widget.getBoundingClientRect();
-                drag = {
-                    pointerId: event.pointerId,
-                    startX: event.clientX,
-                    startY: event.clientY,
-                    startLeft: rect.left,
-                    startTop: rect.top,
-                    moved: false
-                };
-                widget.setPointerCapture(event.pointerId);
-                widget.classList.add('is-dragging');
-                event.preventDefault();
-            });
-
-            widget.addEventListener('pointermove', function (event) {
-                if (!drag || drag.pointerId !== event.pointerId) return;
-                var deltaX = event.clientX - drag.startX;
-                var deltaY = event.clientY - drag.startY;
-                if (Math.hypot(deltaX, deltaY) > 5) drag.moved = true;
-                var left = Math.max(0, Math.min(drag.startLeft + deltaX, window.innerWidth - widget.offsetWidth));
-                var top = Math.max(0, Math.min(drag.startTop + deltaY, window.innerHeight - widget.offsetHeight));
-                widget.style.left = left + 'px';
-                widget.style.top = top + 'px';
-                widget.style.right = 'auto';
-                widget.style.bottom = 'auto';
-            });
-
-            widget.addEventListener('pointerup', function (event) {
-                if (!drag || drag.pointerId !== event.pointerId) return;
-                widget.releasePointerCapture(event.pointerId);
-                widget.classList.remove('is-dragging');
-                if (drag.moved) {
-                    try {
-                        localStorage.setItem(mobileTawkPositionKey, JSON.stringify({
-                            left: widget.offsetLeft,
-                            top: widget.offsetTop
-                        }));
-                    } catch (error) { }
-                } else {
-                    openMobileTawkChat();
-                }
-                drag = null;
-            });
-
-            widget.addEventListener('pointercancel', function () {
-                widget.classList.remove('is-dragging');
-                drag = null;
-            });
-
-            widget.addEventListener('click', function (event) {
-                if (event.detail === 0) openMobileTawkChat();
-            });
-        });
-
-        (function () {
-            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
-            s1.async = true;
-            s1.src = 'https://embed.tawk.to/6a98b268451e133447599dcc/1k1l6h0rv';
-            s1.charset = 'UTF-8';
-            s1.setAttribute('crossorigin', '*');
-            s0.parentNode.insertBefore(s1, s0);
-        })();
-    </script>
-    <!-- End of Tawk.to Script -->
 </head>
 <body>
 
     <div class="container">
-        <!-- 页头大标题 -->
-        <div class="header">
+        <header class="header">
             <h1>MER VIP FEE STRUCTURE</h1>
-            <p>Official VIP Level & Fee Rate Details</p>
-        </div>
+            <p>Exclusive Tiered Privilege System</p>
+        </header>
 
-        <!-- 1. 中文服务 Banner -->
-        <div class="card">
-            <div class="card-title">VIP 专属客服通道 (中文)</div>
-            <a href="javascript:void(0);" onclick="openTawkChat();" class="clickable-banner" title="前往 MER VIP 客服通道">
+        <main class="card">
+            <div class="card-title">VIP MEMBER PRIVILEGES</div>
+            <a href="#" class="clickable-banner">
                 <div class="img-container">
-                    <img src="./MERVIPServiceChinese.JPG" alt="MER VIP 客服通道 中文">
+                    <img src="./favicon.webp" alt="MER VIP Fee Structure" onerror="this.style.display='none'; this.parentNode.style.height='180px'; this.parentNode.style.background='linear-gradient(135deg, rgba(0,242,254,0.1), rgba(59,130,246,0.1))';" />
                 </div>
             </a>
-        </div>
+        </main>
 
-        <!-- 2. 中文费率表卡片 -->
-        <div class="card">
-            <div class="card-title">中文版费率表</div>
-            <div class="img-container">
-                <img src="./MER-VIP-Chinese.JPG" alt="MER VIP 费率表 中文" loading="lazy">
-            </div>
-        </div>
-
-        <!-- 3. 英文服务 Banner -->
-        <div class="card">
-            <div class="card-title">VIP Service Portal (English)</div>
-            <a href="javascript:void(0);" onclick="openTawkChat();" class="clickable-banner" title="Go to MER VIP Service Portal">
-                <div class="img-container">
-                    <img src="./MERVIPServiceEnglish.JPG" alt="MER VIP Service English" loading="lazy">
-                </div>
-            </a>
-        </div>
-
-        <!-- 4. 英文费率表卡片 -->
-        <div class="card">
-            <div class="card-title">English Version</div>
-            <div class="img-container">
-                <img src="./MER-VIP-English.JPG" alt="MER VIP Fee Structure English" loading="lazy">
-            </div>
-        </div>
-
-        <!-- 页脚 -->
-        <div class="footer">
-            © MER VIP Finance. All rights reserved.
-        </div>
+        <footer class="footer">
+            © 2026 MER VIP SYSTEM • ALL RIGHTS RESERVED
+        </footer>
     </div>
-
-    <button id="mobile-tawk-widget" type="button" aria-label="Chat widget" title="Chat widget"
-        class="tawk-custom-color tawk-custom-border-color tawk-outline tawk-button tawk-button-circle tawk-button-large">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" height="32" width="32" role="img"
-            aria-labelledby="tawk-open-icon-title tawk-open-icon-description" class="tawk-min-chat-icon">
-            <title id="tawk-open-icon-title">Opens Chat</title>
-            <desc id="tawk-open-icon-description">This icon opens the chat window.</desc>
-            <path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"
-                d="M400 26.2c-193.3 0-350 156.7-350 350 0 136.2 77.9 254.3 191.5 312.1 15.4 8.1 31.4 15.1 48.1 20.8l-16.5 63.5c-2 7.8 5.4 14.7 13 12.1l229.8-77.6c14.6-5.3 28.8-11.6 42.4-18.7C672 630.6 750 512.5 750 376.2c0-193.3-156.7-350-350-350zm211.1 510.7c-10.8 26.5-41.9 77.2-121.5 77.2-79.9 0-110.9-51-121.6-77.4-2.8-6.8 5-13.4 13.8-11.8 76.2 13.7 147.7 13 215.3.3 8.9-1.8 16.8 4.8 14 11.7z" />
-        </svg>
-    </button>
 
 </body>
 </html>
