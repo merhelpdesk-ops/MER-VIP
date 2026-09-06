@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>MER VIP FEE STRUCTURE</title>
-    
     <link rel="icon" href="./favicon.webp" type="image/webp" />
 
     <style>
@@ -29,17 +28,17 @@
         body {
             background-color: var(--bg-main);
             color: var(--text-primary);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
-        /* 顶部官方 Navigation */
+        /* 顶部导航 */
         .header-bar {
             width: 100%;
-            height: 56px;
+            height: 54px;
             background-color: #0e1322;
             border-bottom: 1px solid var(--card-border);
             display: flex;
@@ -55,15 +54,14 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 800;
-            letter-spacing: 0.5px;
             color: #fff;
         }
 
         .brand-badge {
-            width: 24px;
-            height: 24px;
+            width: 22px;
+            height: 22px;
             background: linear-gradient(135deg, var(--brand-blue), var(--brand-cyan));
             border-radius: 6px;
             display: flex;
@@ -75,7 +73,7 @@
         }
 
         .chat-top-btn {
-            background: linear-gradient(135deg, var(--brand-blue), #0055cc);
+            background: var(--brand-blue);
             color: #fff;
             border: none;
             padding: 6px 14px;
@@ -85,45 +83,40 @@
             cursor: pointer;
         }
 
-        /* 主内容容器 */
+        /* 主内容 */
         .container {
             width: 100%;
             max-width: 720px;
-            padding: 20px 16px 40px;
+            padding: 16px;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 16px;
         }
 
-        /* 标题 Banner */
         .hero {
             text-align: center;
-            padding: 10px 0 4px;
+            padding: 8px 0;
         }
 
         .hero h1 {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 800;
-            letter-spacing: 1px;
-            background: linear-gradient(90deg, #ffffff, #64b5f6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #fff;
             margin-bottom: 4px;
         }
 
         .hero p {
             font-size: 12px;
             color: var(--text-muted);
-            letter-spacing: 0.5px;
         }
 
-        /* 语言切换器 Tab */
+        /* 语言 Tab */
         .tab-box {
             display: flex;
             background: #0f1524;
             border: 1px solid var(--card-border);
-            border-radius: 10px;
-            padding: 3px;
+            border-radius: 8px;
+            padding: 2px;
         }
 
         .tab-item {
@@ -133,6 +126,54 @@
             font-size: 13px;
             font-weight: 600;
             color: var(--text-muted);
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
-            transition:
+        }
+
+        .tab-item.active {
+            background: var(--brand-blue);
+            color: #ffffff;
+        }
+
+        /* 卡片 */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 14px;
+        }
+
+        .card-header {
+            font-size: 14px;
+            font-weight: 700;
+            color: #d1e0f7;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .card-header::before {
+            content: "";
+            width: 3px;
+            height: 12px;
+            background-color: var(--brand-cyan);
+            border-radius: 2px;
+        }
+
+        /* 专属客服入口 */
+        .banner-btn-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(90deg, #131d33 0%, #172440 100%);
+            border: 1px solid #23355c;
+            border-radius: 10px;
+            padding: 14px;
+            cursor: pointer;
+        }
+
+        .banner-text-title {
+            font-size: 14px;
+            font-weight: 700;
+            color:
