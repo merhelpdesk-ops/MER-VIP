@@ -155,7 +155,6 @@
         }
     </style>
 
-    <!-- Start of Tawk.to Script -->
     <script type="text/javascript">
         var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
         var mobileTawkPositionKey = 'merdex-mobile-tawk-position';
@@ -211,7 +210,7 @@
         }
 
         function openMobileTawkChat() {
-            showMobileTawkWidget(false); // 点击展开聊天窗口时，立即隐藏自定义按钮
+            showMobileTawkWidget(false);
             if (typeof Tawk_API.maximize === 'function') {
                 Tawk_API.maximize();
             } else if (typeof Tawk_API.start === 'function') {
@@ -225,13 +224,13 @@
 
         Tawk_API.onLoad = function () {
             if (typeof Tawk_API.hideWidget === 'function') {
-                Tawk_API.hideWidget(); // 隐藏原生物件
+                Tawk_API.hideWidget();
             }
             syncMobileTawkWidget();
         };
 
         Tawk_API.onChatMaximized = function () {
-            showMobileTawkWidget(false); // 展开时隐藏自定义悬浮按钮
+            showMobileTawkWidget(false);
         };
 
         Tawk_API.onChatMinimized = function () {
@@ -324,7 +323,6 @@
             s0.parentNode.insertBefore(s1, s0);
         })();
     </script>
-    <!-- End of Tawk.to Script -->
 </head>
 <body>
 
