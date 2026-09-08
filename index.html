@@ -129,11 +129,6 @@
             display: none;
         }
 
-        .tawk-mobile-native-hidden iframe[src="about:blank"][referrerpolicy="no-referrer-when-downgrade"][style*="max-width:124px"] {
-            transform: translateX(200vw) !important;
-            -webkit-transform: translateX(200vw) !important;
-        }
-
         #mobile-tawk-widget.is-visible {
             align-items: center;
             background: #1595ad;
@@ -173,7 +168,6 @@
         var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
         var mobileTawkPositionKey = 'merdex-mobile-tawk-position';
         Tawk_API.autoStart = false;
-        document.documentElement.classList.add('tawk-mobile-native-hidden');
 
         function isMobileTawkScreen() {
             return true;
@@ -186,13 +180,6 @@
         function showMobileTawkWidget(visible) {
             var widget = getMobileTawkWidget();
             if (widget) widget.classList.toggle('is-visible', visible && isMobileTawkScreen());
-        }
-
-        function hideNativeMobileTawkWidget(hidden) {
-            document.documentElement.classList.toggle(
-                'tawk-mobile-native-hidden',
-                hidden && isMobileTawkScreen()
-            );
         }
 
         function clampMobileTawkWidget() {
@@ -225,7 +212,6 @@
         function syncMobileTawkWidget() {
             if (typeof Tawk_API.showWidget !== 'function') return;
             if (!isMobileTawkScreen()) {
-                hideNativeMobileTawkWidget(false);
                 showMobileTawkWidget(false);
                 if (typeof Tawk_API.start === 'function') Tawk_API.start({ showWidget: true });
                 Tawk_API.showWidget();
@@ -233,11 +219,9 @@
             }
             var maximized = typeof Tawk_API.isChatMaximized === 'function' && Tawk_API.isChatMaximized();
             if (maximized) {
-                hideNativeMobileTawkWidget(false);
                 showMobileTawkWidget(false);
                 Tawk_API.showWidget();
             } else {
-                hideNativeMobileTawkWidget(true);
                 Tawk_API.hideWidget();
                 showMobileTawkWidget(true);
                 restoreMobileTawkPosition();
@@ -246,7 +230,6 @@
 
         function openMobileTawkChat() {
             showMobileTawkWidget(false);
-            hideNativeMobileTawkWidget(false);
             if (typeof Tawk_API.start === 'function') Tawk_API.start({ showWidget: true });
             if (typeof Tawk_API.showWidget === 'function') Tawk_API.showWidget();
             if (typeof Tawk_API.maximize === 'function') Tawk_API.maximize();
@@ -258,12 +241,10 @@
 
         Tawk_API.onLoad = syncMobileTawkWidget;
         Tawk_API.onChatMaximized = function () {
-            hideNativeMobileTawkWidget(false);
             showMobileTawkWidget(false);
         };
         Tawk_API.onChatMinimized = function () {
             if (isMobileTawkScreen()) {
-                hideNativeMobileTawkWidget(true);
                 Tawk_API.hideWidget();
                 showMobileTawkWidget(true);
                 restoreMobileTawkPosition();
@@ -271,7 +252,6 @@
         };
         Tawk_API.onChatHidden = function () {
             if (isMobileTawkScreen()) {
-                hideNativeMobileTawkWidget(true);
                 showMobileTawkWidget(true);
                 restoreMobileTawkPosition();
             }
