@@ -196,29 +196,36 @@
         }
 
         function syncMobileTawkWidget() {
-            if (typeof Tawk_API.showWidget !== 'function') return;
-            Tawk_API.showWidget();
             showMobileTawkWidget(true);
             restoreMobileTawkPosition();
         }
 
+        /* 优化点：删掉 Tawk_API.showWidget()，直接唤起聊天框 */
         function openMobileTawkChat() {
-            if (typeof Tawk_API.start === 'function') Tawk_API.start({ showWidget: true });
-            if (typeof Tawk_API.showWidget === 'function') Tawk_API.showWidget();
-            if (typeof Tawk_API.maximize === 'function') Tawk_API.maximize();
+            if (typeof Tawk_API.maximize === 'function') {
+                Tawk_API.maximize();
+            } else if (typeof Tawk_API.start === 'function') {
+                Tawk_API.start();
+            }
+        }
+
+        function openTawkChat() {
+            openMobileTawkChat();
         }
 
         Tawk_API.onLoad = syncMobileTawkWidget;
+
         Tawk_API.onChatMaximized = function () {
             showMobileTawkWidget(true);
         };
+
         Tawk_API.onChatMinimized = function () {
             if (isMobileTawkScreen()) {
-                Tawk_API.showWidget();
                 showMobileTawkWidget(true);
                 restoreMobileTawkPosition();
             }
         };
+
         Tawk_API.onChatHidden = function () {
             if (isMobileTawkScreen()) {
                 showMobileTawkWidget(true);
