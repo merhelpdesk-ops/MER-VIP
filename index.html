@@ -88,7 +88,7 @@
             border-radius: 2px;
         }
 
-        /* 图片样式与悬停效果 */
+        /* 图片样式 */
         .img-container {
             width: 100%;
             overflow: hidden;
@@ -100,19 +100,6 @@
             height: auto;
             display: block;
             border-radius: 10px;
-            transition: opacity 0.2s ease, transform 0.2s ease;
-        }
-
-        /* 可点击卡片加 hover 变亮反馈 */
-        a.clickable-banner {
-            display: block;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        a.clickable-banner:hover img {
-            opacity: 0.95;
-            transform: scale(1.01);
         }
 
         /* 底部版权 */
@@ -215,15 +202,10 @@
             restoreMobileTawkPosition();
         }
 
-        /* 统一的点击唤起函数，所有 Banner 和悬浮球都调用此逻辑 */
         function openMobileTawkChat() {
             if (typeof Tawk_API.start === 'function') Tawk_API.start({ showWidget: true });
             if (typeof Tawk_API.showWidget === 'function') Tawk_API.showWidget();
             if (typeof Tawk_API.maximize === 'function') Tawk_API.maximize();
-        }
-
-        function openTawkChat() {
-            openMobileTawkChat();
         }
 
         Tawk_API.onLoad = syncMobileTawkWidget;
@@ -332,17 +314,7 @@
             <p>Official VIP Level & Fee Rate Details</p>
         </div>
 
-        <!-- 1. 中文服务 Banner (统一使用 openTawkChat 触发自定义客服) -->
-        <div class="card">
-            <div class="card-title">VIP 专属客服通道 (中文)</div>
-            <a href="javascript:void(0);" onclick="openTawkChat();" class="clickable-banner" title="前往 MER VIP 客服通道">
-                <div class="img-container">
-                    <img src="./MERVIPServiceChinese.JPG" alt="MER VIP 客服通道 中文">
-                </div>
-            </a>
-        </div>
-
-        <!-- 2. 中文费率表卡片 (纯展示，无任何额外跳转) -->
+        <!-- 1. 中文费率表卡片 -->
         <div class="card">
             <div class="card-title">中文版费率表</div>
             <div class="img-container">
@@ -350,17 +322,7 @@
             </div>
         </div>
 
-        <!-- 3. 英文服务 Banner (统一使用 openTawkChat 触发自定义客服) -->
-        <div class="card">
-            <div class="card-title">VIP Service Portal (English)</div>
-            <a href="javascript:void(0);" onclick="openTawkChat();" class="clickable-banner" title="Go to MER VIP Service Portal">
-                <div class="img-container">
-                    <img src="./MERVIPServiceEnglish.JPG" alt="MER VIP Service English" loading="lazy">
-                </div>
-            </a>
-        </div>
-
-        <!-- 4. 英文费率表卡片 (纯展示，无任何额外跳转) -->
+        <!-- 2. 英文费率表卡片 -->
         <div class="card">
             <div class="card-title">English Version</div>
             <div class="img-container">
@@ -374,7 +336,7 @@
         </div>
     </div>
 
-    <!-- 自定义悬浮可拖拽按钮 -->
+    <!-- 唯一的客服入口：自定义可拖拽圆形悬浮按钮 -->
     <button id="mobile-tawk-widget" type="button" aria-label="Chat widget" title="Chat widget"
         class="tawk-custom-color tawk-custom-border-color tawk-outline tawk-button tawk-button-circle tawk-button-large">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" height="32" width="32" role="img"
