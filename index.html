@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MER VIP FEE STRUCTURE</title>
     
-    <!-- Favicon -->
     <link rel="icon" href="./favicon.webp" type="image/webp" />
 
     <style>
@@ -34,7 +33,6 @@
             gap: 24px;
         }
 
-        /* 顶部大标题栏 */
         .header {
             text-align: center;
             margin-top: 12px;
@@ -54,7 +52,6 @@
             color: #8a99ad;
         }
 
-        /* 暗黑科技感卡片容器 */
         .card {
             background: linear-gradient(180deg, #131b2e 0%, #0d1424 100%);
             border: 1px solid #1e2d4a;
@@ -68,7 +65,6 @@
             border-color: #2b457a;
         }
 
-        /* 标题边条与字号 */
         .card-title {
             display: flex;
             align-items: center;
@@ -88,7 +84,6 @@
             border-radius: 2px;
         }
 
-        /* 图片样式 */
         .img-container {
             width: 100%;
             overflow: hidden;
@@ -100,9 +95,20 @@
             height: auto;
             display: block;
             border-radius: 10px;
+            transition: opacity 0.2s ease, transform 0.2s ease;
         }
 
-        /* 底部版权 */
+        a.clickable-banner {
+            display: block;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        a.clickable-banner:hover img {
+            opacity: 0.95;
+            transform: scale(1.01);
+        }
+
         .footer {
             text-align: center;
             font-size: 12px;
@@ -111,7 +117,6 @@
             margin-bottom: 24px;
         }
 
-        /* Mobile Tawk Widget Styles */
         #mobile-tawk-widget {
             display: none;
         }
@@ -200,7 +205,6 @@
             restoreMobileTawkPosition();
         }
 
-        /* 优化点：删掉 Tawk_API.showWidget()，直接唤起聊天框 */
         function openMobileTawkChat() {
             if (typeof Tawk_API.maximize === 'function') {
                 Tawk_API.maximize();
@@ -315,13 +319,20 @@
 <body>
 
     <div class="container">
-        <!-- 页头大标题 -->
         <div class="header">
             <h1>MER VIP FEE STRUCTURE</h1>
             <p>Official VIP Level & Fee Rate Details</p>
         </div>
 
-        <!-- 1. 中文费率表卡片 -->
+        <div class="card">
+            <div class="card-title">VIP 专属客服通道 (中文)</div>
+            <a href="javascript:void(0);" onclick="openTawkChat();" class="clickable-banner" title="前往 MER VIP 客服通道">
+                <div class="img-container">
+                    <img src="./MERVIPServiceChinese.JPG" alt="MER VIP 客服通道 中文">
+                </div>
+            </a>
+        </div>
+
         <div class="card">
             <div class="card-title">中文版费率表</div>
             <div class="img-container">
@@ -329,7 +340,15 @@
             </div>
         </div>
 
-        <!-- 2. 英文费率表卡片 -->
+        <div class="card">
+            <div class="card-title">VIP Service Portal (English)</div>
+            <a href="javascript:void(0);" onclick="openTawkChat();" class="clickable-banner" title="Go to MER VIP Service Portal">
+                <div class="img-container">
+                    <img src="./MERVIPServiceEnglish.JPG" alt="MER VIP Service English" loading="lazy">
+                </div>
+            </a>
+        </div>
+
         <div class="card">
             <div class="card-title">English Version</div>
             <div class="img-container">
@@ -337,13 +356,11 @@
             </div>
         </div>
 
-        <!-- 页脚 -->
         <div class="footer">
             © MER Global 2023-2026
         </div>
     </div>
 
-    <!-- 唯一的客服入口：自定义可拖拽圆形悬浮按钮 -->
     <button id="mobile-tawk-widget" type="button" aria-label="Chat widget" title="Chat widget"
         class="tawk-custom-color tawk-custom-border-color tawk-outline tawk-button tawk-button-circle tawk-button-large">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" height="32" width="32" role="img"
