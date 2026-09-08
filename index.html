@@ -167,7 +167,6 @@
     <script type="text/javascript">
         var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
         var mobileTawkPositionKey = 'merdex-mobile-tawk-position';
-        Tawk_API.autoStart = false;
 
         function isMobileTawkScreen() {
             return true;
@@ -211,25 +210,12 @@
 
         function syncMobileTawkWidget() {
             if (typeof Tawk_API.showWidget !== 'function') return;
-            if (!isMobileTawkScreen()) {
-                showMobileTawkWidget(false);
-                if (typeof Tawk_API.start === 'function') Tawk_API.start({ showWidget: true });
-                Tawk_API.showWidget();
-                return;
-            }
-            var maximized = typeof Tawk_API.isChatMaximized === 'function' && Tawk_API.isChatMaximized();
-            if (maximized) {
-                showMobileTawkWidget(false);
-                Tawk_API.showWidget();
-            } else {
-                Tawk_API.hideWidget();
-                showMobileTawkWidget(true);
-                restoreMobileTawkPosition();
-            }
+            Tawk_API.showWidget();
+            showMobileTawkWidget(true);
+            restoreMobileTawkPosition();
         }
 
         function openMobileTawkChat() {
-            showMobileTawkWidget(false);
             if (typeof Tawk_API.start === 'function') Tawk_API.start({ showWidget: true });
             if (typeof Tawk_API.showWidget === 'function') Tawk_API.showWidget();
             if (typeof Tawk_API.maximize === 'function') Tawk_API.maximize();
@@ -241,11 +227,11 @@
 
         Tawk_API.onLoad = syncMobileTawkWidget;
         Tawk_API.onChatMaximized = function () {
-            showMobileTawkWidget(false);
+            showMobileTawkWidget(true);
         };
         Tawk_API.onChatMinimized = function () {
             if (isMobileTawkScreen()) {
-                Tawk_API.hideWidget();
+                Tawk_API.showWidget();
                 showMobileTawkWidget(true);
                 restoreMobileTawkPosition();
             }
