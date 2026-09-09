@@ -52,6 +52,40 @@
             color: #8a99ad;
         }
 
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+            width: 100%;
+        }
+
+        .btn-nav {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 16px;
+            background: linear-gradient(180deg, #182642 0%, #0f192e 100%);
+            border: 1px solid #0088ff;
+            border-radius: 10px;
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: 0 4px 16px rgba(0, 136, 255, 0.15);
+            transition: all 0.2s ease;
+        }
+
+        .btn-nav:hover {
+            background: linear-gradient(180deg, #0088ff 0%, #0055b3 100%);
+            border-color: #4da3ff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 136, 255, 0.3);
+        }
+
+        .btn-nav:active {
+            transform: translateY(0);
+        }
+
         .card {
             background: linear-gradient(180deg, #131b2e 0%, #0d1424 100%);
             border: 1px solid #1e2d4a;
@@ -330,6 +364,11 @@
         <div class="header">
             <h1>MER VIP FEE STRUCTURE</h1>
             <p>Official VIP Level & Fee Rate Details</p>
+        </div>
+
+        <div class="nav-buttons">
+            <a href="https://www.mer.finance" target="_self" class="btn-nav">Spot Swap</a>
+            <a href="https://perp.mer.finance" target="_self" class="btn-nav">Perpetuals</a>
         </div>
 
         <div class="card">
