@@ -7,38 +7,34 @@
     
     <link rel="icon" href="./favicon.webp" type="image/webp" />
 
-    <!-- 【零闪烁抢跑拦截】DOM 节点保留，通信正常，视觉彻底隐藏原生图标 -->
+    <!-- 【精确拦截原生气泡，保护 PC 展开大窗口及关闭按钮】 -->
     <script>
-        (function suppressNativeTawkIcon() {
-            const observer = new MutationObserver((mutations) => {
-                for (const mutation of mutations) {
-                    for (const node of mutation.addedNodes) {
-                        if (node.nodeType === 1 && node.tagName === 'IFRAME') {
-                            const src = node.getAttribute('src') || '';
-                            const title = node.getAttribute('title') || '';
-                            const style = node.getAttribute('style') || '';
-                            
-                            // 识别原生气泡 iframe，排除聊天大窗口
-                            const isTawkBubble = 
-                                (src.includes('about:blank') || title.toLowerCase().includes('chat widget')) &&
-                                !style.includes('max-height: 100%') && 
-                                !style.includes('height: 100%') &&
-                                !style.includes('height:100%');
+      (function suppressNativeTawkIcon() {
+        const observer = new MutationObserver((mutations) => {
+          for (const mutation of mutations) {
+            for (const node of mutation.addedNodes) {
+              if (node.nodeType === 1 && node.tagName === 'IFRAME') {
+                const title = (node.getAttribute('title') || '').toLowerCase();
+                const style = node.getAttribute('style') || '';
+                
+                // 精确判定：只有当尺寸小于 150px 时才认为是原生浮动气泡，防止误伤大窗口
+                const isSmallBubble = style.includes('width: 60px') || style.includes('width: 64px') || style.includes('height: 60px') || style.includes('height: 64px');
+                const isTawkBubble = (title.includes('chat widget') || title.includes('tawk')) && !style.includes('100%') && (isSmallBubble || !style.includes('width:'));
 
-                            if (isTawkBubble) {
-                                node.style.setProperty('display', 'none', 'important');
-                                node.style.setProperty('visibility', 'hidden', 'important');
-                                node.style.setProperty('opacity', '0', 'important');
-                                node.style.setProperty('pointer-events', 'none', 'important');
-                                node.style.setProperty('transform', 'scale(0)', 'important');
-                            }
-                        }
-                    }
+                if (isTawkBubble) {
+                  node.style.setProperty('display', 'none', 'important');
+                  node.style.setProperty('visibility', 'hidden', 'important');
+                  node.style.setProperty('opacity', '0', 'important');
+                  node.style.setProperty('pointer-events', 'none', 'important');
+                  node.style.setProperty('transform', 'scale(0)', 'important');
                 }
-            });
+              }
+            }
+          }
+        });
 
-            observer.observe(document.documentElement, { childList: true, subtree: true });
-        })();
+        observer.observe(document.documentElement, { childList: true, subtree: true });
+      })();
     </script>
 
     <style>
@@ -59,14 +55,16 @@
             padding-bottom: 24px;
         }
 
-        /* CSS 双重强封：阻止浏览器渲染原生气泡帧 */
-        iframe[src="about:blank"][referrerpolicy="no-referrer-when-downgrade"],
-        iframe[title*="chat widget"]:not([style*="max-height:100%"]):not([style*="height: 100%"]) {
-            display: none !important;
-            visibility: hidden !important;
-            opacity: 0 !important;
-            pointer-events: none !important;
-            transform: scale(0) !important;
+        /* 精确隐藏原生气泡：仅当 iframe 尺寸为气泡大小时触发，绝不隐藏聊天大窗口 */
+        iframe[title*="chat widget"][style*="width: 60px"],
+        iframe[title*="chat widget"][style*="width: 64px"],
+        iframe[title*="chat widget"][style*="width:60px"],
+        iframe[title*="chat widget"][style*="width:64px"] {
+          display: none !important;
+          visibility: hidden !important;
+          opacity: 0 !important;
+          pointer-events: none !important;
+          transform: scale(0) !important;
         }
 
         /* 顶部全局导航栏 (Navbar) */
@@ -224,7 +222,35 @@
             margin-bottom: 24px;
         }
 
-        /* 自定义浮动客服入口按钮 */
+        /* 移动端弹窗防遮挡与适配逻辑 */
+        @media (max-width: 768px) {
+          div[role="dialog"] {
+            margin-bottom: calc(72px + env(safe-area-inset-bottom, 0px)) !important;
+            max-height: calc(100vh - 120px) !important;
+            max-width: 94vw !important;
+            box-sizing: border-box !important;
+          }
+
+          div[role="dialog"] > div {
+            max-height: calc(100vh - 140px) !important;
+            overflow-y: auto !important;
+            overflow-x: hidden !important;
+            box-sizing: border-box !important;
+          }
+
+          div[role="dialog"] * {
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+            word-break: break-word !important;
+          }
+
+          div[role="dialog"] div[style*="width"] {
+            width: 100% !important;
+            min-width: 0 !important;
+          }
+        }
+
+        /* 自定义客服悬浮球 */
         #mobile-tawk-widget {
             display: none;
         }
@@ -265,193 +291,184 @@
     </style>
 
     <script type="text/javascript">
-        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
-        var mobileTawkPositionKey = 'merdex-mobile-tawk-position';
+      var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+      Tawk_API.lang = 'en';
 
-        function isMobileTawkScreen() {
-            return true;
+      var mobileTawkPositionKey = 'merdex-mobile-tawk-position';
+
+      function isMobileTawkScreen() {
+        return true;
+      }
+
+      function getMobileTawkWidget() {
+        return document.getElementById('mobile-tawk-widget');
+      }
+
+      function showMobileTawkWidget(visible) {
+        var widget = getMobileTawkWidget();
+        if (widget) widget.classList.toggle('is-visible', visible && isMobileTawkScreen());
+      }
+
+      function hideNativeTawkWidget() {
+        if (typeof Tawk_API.hideWidget === 'function') {
+          Tawk_API.hideWidget();
         }
+      }
 
-        function getMobileTawkWidget() {
-            return document.getElementById('mobile-tawk-widget');
-        }
+      function clampMobileTawkWidget() {
+        var widget = getMobileTawkWidget();
+        if (!widget || !widget.classList.contains('is-visible')) return;
+        var rect = widget.getBoundingClientRect();
+        var left = Math.max(0, Math.min(rect.left, window.innerWidth - rect.width));
+        var top = Math.max(0, Math.min(rect.top, window.innerHeight - rect.height));
+        widget.style.left = left + 'px';
+        widget.style.top = top + 'px';
+        widget.style.right = 'auto';
+        widget.style.bottom = 'auto';
+      }
 
-        function showMobileTawkWidget(visible) {
-            var widget = getMobileTawkWidget();
-            if (widget) widget.classList.toggle('is-visible', visible && isMobileTawkScreen());
-        }
-
-        function hideNativeTawkWidget() {
-            if (typeof Tawk_API.hideWidget === 'function') {
-                Tawk_API.hideWidget();
-            }
-        }
-
-        function clampMobileTawkWidget() {
-            var widget = getMobileTawkWidget();
-            if (!widget || !widget.classList.contains('is-visible')) return;
-            var rect = widget.getBoundingClientRect();
-            var left = Math.max(0, Math.min(rect.left, window.innerWidth - rect.width));
-            var top = Math.max(0, Math.min(rect.top, window.innerHeight - rect.height));
-            widget.style.left = left + 'px';
-            widget.style.top = top + 'px';
+      function restoreMobileTawkPosition() {
+        var widget = getMobileTawkWidget();
+        if (!widget) return;
+        try {
+          var position = JSON.parse(localStorage.getItem(mobileTawkPositionKey));
+          if (position && Number.isFinite(position.left) && Number.isFinite(position.top)) {
+            widget.style.left = position.left + 'px';
+            widget.style.top = position.top + 'px';
             widget.style.right = 'auto';
             widget.style.bottom = 'auto';
+          }
+        } catch (error) { }
+        requestAnimationFrame(clampMobileTawkWidget);
+      }
+
+      function syncMobileTawkWidget() {
+        var maximized = typeof Tawk_API.isChatMaximized === 'function' && Tawk_API.isChatMaximized();
+        if (maximized) {
+          showMobileTawkWidget(false);
+        } else {
+          showMobileTawkWidget(true);
+          restoreMobileTawkPosition();
         }
+      }
 
-        function restoreMobileTawkPosition() {
-            var widget = getMobileTawkWidget();
-            if (!widget) return;
-            try {
-                var position = JSON.parse(localStorage.getItem(mobileTawkPositionKey));
-                if (position && Number.isFinite(position.left) && Number.isFinite(position.top)) {
-                    widget.style.left = position.left + 'px';
-                    widget.style.top = position.top + 'px';
-                    widget.style.right = 'auto';
-                    widget.style.bottom = 'auto';
-                }
-            } catch (error) { }
-            requestAnimationFrame(clampMobileTawkWidget);
+      function openMobileTawkChat() {
+        showMobileTawkWidget(false);
+        if (typeof Tawk_API.maximize === 'function') {
+          Tawk_API.maximize();
+        } else if (typeof Tawk_API.start === 'function') {
+          Tawk_API.start();
         }
+      }
 
-        function syncMobileTawkWidget() {
-            var maximized = typeof Tawk_API.isChatMaximized === 'function' && Tawk_API.isChatMaximized();
-            if (maximized) {
-                showMobileTawkWidget(false);
-            } else {
-                hideNativeTawkWidget();
-                showMobileTawkWidget(true);
-                restoreMobileTawkPosition();
-            }
-        }
+      function openTawkChat() {
+        openMobileTawkChat();
+      }
 
-        function openMobileTawkChat() {
-            showMobileTawkWidget(false);
-            if (typeof Tawk_API.showWidget === 'function') {
-                Tawk_API.showWidget();
-            }
-            if (typeof Tawk_API.maximize === 'function') {
-                Tawk_API.maximize();
-            } else if (typeof Tawk_API.start === 'function') {
-                Tawk_API.start();
-            }
-        }
+      /* Tawk 生命周期逻辑 */
+      Tawk_API.onBeforeLoad = function() {
+        hideNativeTawkWidget();
+      };
 
-        function openTawkChat() {
-            openMobileTawkChat();
-        }
+      Tawk_API.onLoad = function () {
+        hideNativeTawkWidget();
+        syncMobileTawkWidget();
+      };
 
-        /* 阶段 1：在 Tawk 开始加载前强制绑定隐藏 */
-        Tawk_API.onBeforeLoad = hideNativeTawkWidget;
+      Tawk_API.onChatMaximized = function () {
+        showMobileTawkWidget(false);
+      };
 
-        /* 阶段 2：全生命周期拦截【包括点击聊天框关闭/最小化按钮】 */
-        Tawk_API.onLoad = function () {
-            hideNativeTawkWidget();
-            syncMobileTawkWidget();
-        };
+      Tawk_API.onChatMinimized = function () {
+        hideNativeTawkWidget();
+        showMobileTawkWidget(true);
+        restoreMobileTawkPosition();
+      };
 
-        Tawk_API.onChatMaximized = function () {
-            showMobileTawkWidget(false);
-        };
+      Tawk_API.onChatHidden = function () {
+        hideNativeTawkWidget();
+        showMobileTawkWidget(true);
+        restoreMobileTawkPosition();
+      };
 
-        // 处理用户点击“最小化”按钮
-        Tawk_API.onChatMinimized = function () {
-            hideNativeTawkWidget();
-            showMobileTawkWidget(true);
-            restoreMobileTawkPosition();
-        };
+      window.addEventListener('resize', syncMobileTawkWidget);
 
-        // 处理用户点击“关闭”按钮或结束对话
-        Tawk_API.onChatHidden = function () {
-            hideNativeTawkWidget();
-            showMobileTawkWidget(true);
-            restoreMobileTawkPosition();
-        };
+      document.addEventListener('DOMContentLoaded', function () {
+        var widget = getMobileTawkWidget();
+        var drag = null;
 
-        Tawk_API.onChatEnded = function () {
-            hideNativeTawkWidget();
-            showMobileTawkWidget(true);
-            restoreMobileTawkPosition();
-        };
+        if (!widget) return;
 
-        window.addEventListener('resize', syncMobileTawkWidget);
+        syncMobileTawkWidget();
 
-        document.addEventListener('DOMContentLoaded', function () {
-            var widget = getMobileTawkWidget();
-            var drag = null;
-
-            if (!widget) return;
-
-            syncMobileTawkWidget();
-
-            widget.addEventListener('pointerdown', function (event) {
-                var rect = widget.getBoundingClientRect();
-                drag = {
-                    pointerId: event.pointerId,
-                    startX: event.clientX,
-                    startY: event.clientY,
-                    startLeft: rect.left,
-                    startTop: rect.top,
-                    moved: false
-                };
-                widget.setPointerCapture(event.pointerId);
-                widget.classList.add('is-dragging');
-                event.preventDefault();
-            });
-
-            widget.addEventListener('pointermove', function (event) {
-                if (!drag || drag.pointerId !== event.pointerId) return;
-                var deltaX = event.clientX - drag.startX;
-                var deltaY = event.clientY - drag.startY;
-                if (Math.hypot(deltaX, deltaY) > 5) drag.moved = true;
-                var left = Math.max(0, Math.min(drag.startLeft + deltaX, window.innerWidth - widget.offsetWidth));
-                var top = Math.max(0, Math.min(drag.startTop + deltaY, window.innerHeight - widget.offsetHeight));
-                widget.style.left = left + 'px';
-                widget.style.top = top + 'px';
-                widget.style.right = 'auto';
-                widget.style.bottom = 'auto';
-            });
-
-            widget.addEventListener('pointerup', function (event) {
-                if (!drag || drag.pointerId !== event.pointerId) return;
-                widget.releasePointerCapture(event.pointerId);
-                widget.classList.remove('is-dragging');
-                if (drag.moved) {
-                    try {
-                        localStorage.setItem(mobileTawkPositionKey, JSON.stringify({
-                            left: widget.offsetLeft,
-                            top: widget.offsetTop
-                        }));
-                    } catch (error) { }
-                } else {
-                    openMobileTawkChat();
-                }
-                drag = null;
-            });
-
-            widget.addEventListener('pointercancel', function () {
-                widget.classList.remove('is-dragging');
-                drag = null;
-            });
-
-            widget.addEventListener('click', function (event) {
-                if (event.detail === 0) openMobileTawkChat();
-            });
+        widget.addEventListener('pointerdown', function (event) {
+          var rect = widget.getBoundingClientRect();
+          drag = {
+            pointerId: event.pointerId,
+            startX: event.clientX,
+            startY: event.clientY,
+            startLeft: rect.left,
+            startTop: rect.top,
+            moved: false
+          };
+          widget.setPointerCapture(event.pointerId);
+          widget.classList.add('is-dragging');
+          event.preventDefault();
         });
 
-        // 异步加载 Tawk 核心 SDK
-        (function () {
-            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
-            s1.async = true;
-            s1.src = 'https://embed.tawk.to/6a98b268451e133447599dcc/1k1l6h0rv';
-            s1.charset = 'UTF-8';
-            s1.setAttribute('crossorigin', '*');
-            if (s0 && s0.parentNode) {
-                s0.parentNode.insertBefore(s1, s0);
-            } else {
-                document.head.appendChild(s1);
-            }
-        })();
+        widget.addEventListener('pointermove', function (event) {
+          if (!drag || drag.pointerId !== event.pointerId) return;
+          var deltaX = event.clientX - drag.startX;
+          var deltaY = event.clientY - drag.startY;
+          if (Math.hypot(deltaX, deltaY) > 5) drag.moved = true;
+          var left = Math.max(0, Math.min(drag.startLeft + deltaX, window.innerWidth - widget.offsetWidth));
+          var top = Math.max(0, Math.min(drag.startTop + deltaY, window.innerHeight - widget.offsetHeight));
+          widget.style.left = left + 'px';
+          widget.style.top = top + 'px';
+          widget.style.right = 'auto';
+          widget.style.bottom = 'auto';
+        });
+
+        widget.addEventListener('pointerup', function (event) {
+          if (!drag || drag.pointerId !== event.pointerId) return;
+          widget.releasePointerCapture(event.pointerId);
+          widget.classList.remove('is-dragging');
+          if (drag.moved) {
+            try {
+              localStorage.setItem(mobileTawkPositionKey, JSON.stringify({
+                left: widget.offsetLeft,
+                top: widget.offsetTop
+              }));
+            } catch (error) { }
+          } else {
+            openMobileTawkChat();
+          }
+          drag = null;
+        });
+
+        widget.addEventListener('pointercancel', function () {
+          widget.classList.remove('is-dragging');
+          drag = null;
+        });
+
+        widget.addEventListener('click', function (event) {
+          if (event.detail === 0) openMobileTawkChat();
+        });
+      });
+
+      // 异步加载 Tawk 核心 SDK
+      (function () {
+        var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+        s1.async = true;
+        s1.src = 'https://embed.tawk.to/6a98b268451e133447599dcc/1k1l6h0rv';
+        s1.charset = 'UTF-8';
+        s1.setAttribute('crossorigin', '*');
+        if (s0 && s0.parentNode) {
+          s0.parentNode.insertBefore(s1, s0);
+        } else {
+          document.head.appendChild(s1);
+        }
+      })();
     </script>
 </head>
 <body>
@@ -513,15 +530,14 @@
     </div>
 
     <!-- 自定义可拖拽圆形客服悬浮球 -->
-    <button id="mobile-tawk-widget" type="button" aria-label="Chat widget" title="Chat widget"
-        class="tawk-custom-color tawk-custom-border-color tawk-outline tawk-button tawk-button-circle tawk-button-large">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" height="32" width="32" role="img"
-            aria-labelledby="tawk-open-icon-title tawk-open-icon-description" class="tawk-min-chat-icon">
-            <title id="tawk-open-icon-title">Opens Chat</title>
-            <desc id="tawk-open-icon-description">This icon opens the chat window.</desc>
-            <path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"
-                d="M400 26.2c-193.3 0-350 156.7-350 350 0 136.2 77.9 254.3 191.5 312.1 15.4 8.1 31.4 15.1 48.1 20.8l-16.5 63.5c-2 7.8 5.4 14.7 13 12.1l229.8-77.6c14.6-5.3 28.8-11.6 42.4-18.7C672 630.6 750 512.5 750 376.2c0-193.3-156.7-350-350-350zm211.1 510.7c-10.8 26.5-41.9 77.2-121.5 77.2-79.9 0-110.9-51-121.6-77.4-2.8-6.8 5-13.4 13.8-11.8 76.2 13.7 147.7 13 215.3.3 8.9-1.8 16.8 4.8 14 11.7z" />
-        </svg>
+    <button id="mobile-tawk-widget" type="button" aria-label="Chat widget" title="Chat widget">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" height="32" width="32" role="img"
+        aria-labelledby="tawk-open-icon-title tawk-open-icon-description">
+        <title id="tawk-open-icon-title">Opens Chat</title>
+        <desc id="tawk-open-icon-description">This icon opens the chat window.</desc>
+        <path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"
+          d="M400 26.2c-193.3 0-350 156.7-350 350 0 136.2 77.9 254.3 191.5 312.1 15.4 8.1 31.4 15.1 48.1 20.8l-16.5 63.5c-2 7.8 5.4 14.7 13 12.1l229.8-77.6c14.6-5.3 28.8-11.6 42.4-18.7C672 630.6 750 512.5 750 376.2c0-193.3-156.7-350-350-350zm211.1 510.7c-10.8 26.5-41.9 77.2-121.5 77.2-79.9 0-110.9-51-121.6-77.4-2.8-6.8 5-13.4 13.8-11.8 76.2 13.7 147.7 13 215.3.3 8.9-1.8 16.8 4.8 14 11.7z" />
+      </svg>
     </button>
 
 </body>
