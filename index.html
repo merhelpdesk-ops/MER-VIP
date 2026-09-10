@@ -33,9 +33,30 @@
             gap: 24px;
         }
 
+        /* 顶部导航与 Logo 样式 */
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 4px 0;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            height: 36px;
+            width: auto;
+            object-fit: contain;
+        }
+
         .header {
             text-align: center;
-            margin-top: 12px;
+            margin-top: 4px;
             margin-bottom: 8px;
         }
 
@@ -361,6 +382,13 @@
 <body>
 
     <div class="container">
+        <!-- 顶部 Logo 区块 -->
+        <div class="top-bar">
+            <a href="https://www.mer.finance" class="logo-container">
+                <img src="./favicon.webp" alt="MER Logo" class="logo-img">
+            </a>
+        </div>
+
         <div class="header">
             <h1>MER VIP FEE STRUCTURE</h1>
             <p>Official VIP Level & Fee Rate Details</p>
