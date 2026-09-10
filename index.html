@@ -7,7 +7,7 @@
     
     <link rel="icon" href="./favicon.webp" type="image/webp" />
 
-    <!-- 【零闪烁抢跑拦截】DOM 节点保留，通信正常，视觉彻底隐藏 -->
+    <!-- 【零闪烁抢跑拦截】DOM 节点保留，通信正常，视觉彻底隐藏原生图标 -->
     <script>
         (function suppressNativeTawkIcon() {
             const observer = new MutationObserver((mutations) => {
@@ -224,6 +224,7 @@
             margin-bottom: 24px;
         }
 
+        /* 自定义浮动客服入口按钮 */
         #mobile-tawk-widget {
             display: none;
         }
@@ -318,6 +319,7 @@
             if (maximized) {
                 showMobileTawkWidget(false);
             } else {
+                hideNativeTawkWidget();
                 showMobileTawkWidget(true);
                 restoreMobileTawkPosition();
             }
@@ -325,6 +327,9 @@
 
         function openMobileTawkChat() {
             showMobileTawkWidget(false);
+            if (typeof Tawk_API.showWidget === 'function') {
+                Tawk_API.showWidget();
+            }
             if (typeof Tawk_API.maximize === 'function') {
                 Tawk_API.maximize();
             } else if (typeof Tawk_API.start === 'function') {
@@ -336,10 +341,10 @@
             openMobileTawkChat();
         }
 
-        /* 阶段 1：在 Tawk 开始加载前先绑定隐藏 */
+        /* 阶段 1：在 Tawk 开始加载前强制绑定隐藏 */
         Tawk_API.onBeforeLoad = hideNativeTawkWidget;
 
-        /* 阶段 2：生命周期保持唤起与隐藏的完美平衡 */
+        /* 阶段 2：全生命周期拦截【包括点击聊天框关闭/最小化按钮】 */
         Tawk_API.onLoad = function () {
             hideNativeTawkWidget();
             syncMobileTawkWidget();
@@ -349,13 +354,21 @@
             showMobileTawkWidget(false);
         };
 
+        // 处理用户点击“最小化”按钮
         Tawk_API.onChatMinimized = function () {
             hideNativeTawkWidget();
             showMobileTawkWidget(true);
             restoreMobileTawkPosition();
         };
 
+        // 处理用户点击“关闭”按钮或结束对话
         Tawk_API.onChatHidden = function () {
+            hideNativeTawkWidget();
+            showMobileTawkWidget(true);
+            restoreMobileTawkPosition();
+        };
+
+        Tawk_API.onChatEnded = function () {
             hideNativeTawkWidget();
             showMobileTawkWidget(true);
             restoreMobileTawkPosition();
@@ -426,6 +439,7 @@
             });
         });
 
+        // 异步加载 Tawk 核心 SDK
         (function () {
             var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
             s1.async = true;
@@ -498,6 +512,7 @@
         </div>
     </div>
 
+    <!-- 自定义可拖拽圆形客服悬浮球 -->
     <button id="mobile-tawk-widget" type="button" aria-label="Chat widget" title="Chat widget"
         class="tawk-custom-color tawk-custom-border-color tawk-outline tawk-button tawk-button-circle tawk-button-large">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" height="32" width="32" role="img"
