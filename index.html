@@ -7,6 +7,40 @@
     
     <link rel="icon" href="./favicon.webp" type="image/webp" />
 
+    <!-- 【零闪烁抢跑拦截】DOM 节点保留，通信正常，视觉彻底隐藏 -->
+    <script>
+        (function suppressNativeTawkIcon() {
+            const observer = new MutationObserver((mutations) => {
+                for (const mutation of mutations) {
+                    for (const node of mutation.addedNodes) {
+                        if (node.nodeType === 1 && node.tagName === 'IFRAME') {
+                            const src = node.getAttribute('src') || '';
+                            const title = node.getAttribute('title') || '';
+                            const style = node.getAttribute('style') || '';
+                            
+                            // 识别原生气泡 iframe，排除聊天大窗口
+                            const isTawkBubble = 
+                                (src.includes('about:blank') || title.toLowerCase().includes('chat widget')) &&
+                                !style.includes('max-height: 100%') && 
+                                !style.includes('height: 100%') &&
+                                !style.includes('height:100%');
+
+                            if (isTawkBubble) {
+                                node.style.setProperty('display', 'none', 'important');
+                                node.style.setProperty('visibility', 'hidden', 'important');
+                                node.style.setProperty('opacity', '0', 'important');
+                                node.style.setProperty('pointer-events', 'none', 'important');
+                                node.style.setProperty('transform', 'scale(0)', 'important');
+                            }
+                        }
+                    }
+                }
+            });
+
+            observer.observe(document.documentElement, { childList: true, subtree: true });
+        })();
+    </script>
+
     <style>
         * {
             box-sizing: border-box;
@@ -23,6 +57,16 @@
             align-items: center;
             min-height: 100vh;
             padding-bottom: 24px;
+        }
+
+        /* CSS 双重强封：阻止浏览器渲染原生气泡帧 */
+        iframe[src="about:blank"][referrerpolicy="no-referrer-when-downgrade"],
+        iframe[title*="chat widget"]:not([style*="max-height:100%"]):not([style*="height: 100%"]) {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+            transform: scale(0) !important;
         }
 
         /* 顶部全局导航栏 (Navbar) */
@@ -203,6 +247,7 @@
             user-select: none;
             width: 44px;
             z-index: 2000000001;
+            transition: transform 0.15s ease, opacity 0.2s ease;
         }
 
         #mobile-tawk-widget.is-dragging {
@@ -233,6 +278,12 @@
         function showMobileTawkWidget(visible) {
             var widget = getMobileTawkWidget();
             if (widget) widget.classList.toggle('is-visible', visible && isMobileTawkScreen());
+        }
+
+        function hideNativeTawkWidget() {
+            if (typeof Tawk_API.hideWidget === 'function') {
+                Tawk_API.hideWidget();
+            }
         }
 
         function clampMobileTawkWidget() {
@@ -285,10 +336,12 @@
             openMobileTawkChat();
         }
 
+        /* 阶段 1：在 Tawk 开始加载前先绑定隐藏 */
+        Tawk_API.onBeforeLoad = hideNativeTawkWidget;
+
+        /* 阶段 2：生命周期保持唤起与隐藏的完美平衡 */
         Tawk_API.onLoad = function () {
-            if (typeof Tawk_API.hideWidget === 'function') {
-                Tawk_API.hideWidget();
-            }
+            hideNativeTawkWidget();
             syncMobileTawkWidget();
         };
 
@@ -297,17 +350,13 @@
         };
 
         Tawk_API.onChatMinimized = function () {
-            if (typeof Tawk_API.hideWidget === 'function') {
-                Tawk_API.hideWidget();
-            }
+            hideNativeTawkWidget();
             showMobileTawkWidget(true);
             restoreMobileTawkPosition();
         };
 
         Tawk_API.onChatHidden = function () {
-            if (typeof Tawk_API.hideWidget === 'function') {
-                Tawk_API.hideWidget();
-            }
+            hideNativeTawkWidget();
             showMobileTawkWidget(true);
             restoreMobileTawkPosition();
         };
@@ -383,13 +432,17 @@
             s1.src = 'https://embed.tawk.to/6a98b268451e133447599dcc/1k1l6h0rv';
             s1.charset = 'UTF-8';
             s1.setAttribute('crossorigin', '*');
-            s0.parentNode.insertBefore(s1, s0);
+            if (s0 && s0.parentNode) {
+                s0.parentNode.insertBefore(s1, s0);
+            } else {
+                document.head.appendChild(s1);
+            }
         })();
     </script>
 </head>
 <body>
 
-    <!-- 1. 置顶导航栏 (左侧换为 MERVIP_Poster.png) -->
+    <!-- 1. 置顶导航栏 -->
     <header class="top-navbar">
         <a href="https://www.mer.finance" class="brand-logo">
             <img src="./MERVIP_Poster.png" alt="MER VIP Logo">
