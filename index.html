@@ -7,35 +7,7 @@
     
     <link rel="icon" href="./favicon.webp" type="image/webp" />
 
-    <script>
-      (function suppressNativeTawkIcon() {
-        const observer = new MutationObserver((mutations) => {
-          for (const mutation of mutations) {
-            for (const node of mutation.addedNodes) {
-              if (node.nodeType === 1 && node.tagName === 'IFRAME') {
-                const title = (node.getAttribute('title') || '').toLowerCase();
-                const style = node.getAttribute('style') || '';
-                
-                const isSmallBubble = style.includes('width: 60px') || style.includes('width: 64px') || style.includes('height: 60px') || style.includes('height: 64px');
-                const isTawkBubble = (title.includes('chat widget') || title.includes('tawk')) && !style.includes('100%') && (isSmallBubble || !style.includes('width:'));
-
-                if (isTawkBubble) {
-                  node.style.setProperty('display', 'none', 'important');
-                  node.style.setProperty('visibility', 'hidden', 'important');
-                  node.style.setProperty('opacity', '0', 'important');
-                  node.style.setProperty('pointer-events', 'none', 'important');
-                  node.style.setProperty('transform', 'scale(0)', 'important');
-                }
-              }
-            }
-          }
-        });
-
-        observer.observe(document.documentElement, { childList: true, subtree: true });
-      })();
-    </script>
-
-    <style>
+    <style id="tawk-anti-flicker-style">
         * {
             box-sizing: border-box;
             margin: 0;
@@ -53,15 +25,24 @@
             padding-bottom: 24px;
         }
 
-        iframe[title*="chat widget"][style*="width: 60px"],
-        iframe[title*="chat widget"][style*="width: 64px"],
-        iframe[title*="chat widget"][style*="width:60px"],
-        iframe[title*="chat widget"][style*="width:64px"] {
-          display: none !important;
-          visibility: hidden !important;
-          opacity: 0 !important;
-          pointer-events: none !important;
-          transform: scale(0) !important;
+        body:not(.tawk-chat-open) iframe[src*="tawk.to"],
+        body:not(.tawk-chat-open) iframe[title*="chat"],
+        body:not(.tawk-chat-open) div[id^="tawk"],
+        body:not(.tawk-chat-open) div[class*="tawk"] {
+            display: none !important;
+            opacity: 0 !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
+            transform: translate3d(-9999px, -9999px, 0) !important;
+        }
+
+        body.tawk-chat-open iframe[src*="tawk.to"],
+        body.tawk-chat-open iframe[title*="chat"] {
+            display: block !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            pointer-events: auto !important;
+            transform: none !important;
         }
 
         .top-navbar {
@@ -288,10 +269,7 @@
       Tawk_API.lang = 'en';
 
       var mobileTawkPositionKey = 'merdex-mobile-tawk-position';
-
-      function isMobileTawkScreen() {
-        return true;
-      }
+      var tawkReady = false;
 
       function getMobileTawkWidget() {
         return document.getElementById('mobile-tawk-widget');
@@ -299,13 +277,7 @@
 
       function showMobileTawkWidget(visible) {
         var widget = getMobileTawkWidget();
-        if (widget) widget.classList.toggle('is-visible', visible && isMobileTawkScreen());
-      }
-
-      function hideNativeTawkWidget() {
-        if (typeof Tawk_API.hideWidget === 'function') {
-          Tawk_API.hideWidget();
-        }
+        if (widget) widget.classList.toggle('is-visible', visible);
       }
 
       function clampMobileTawkWidget() {
@@ -335,63 +307,91 @@
         requestAnimationFrame(clampMobileTawkWidget);
       }
 
-      function syncMobileTawkWidget() {
-        var maximized = typeof Tawk_API.isChatMaximized === 'function' && Tawk_API.isChatMaximized();
-        if (maximized) {
-          showMobileTawkWidget(false);
-        } else {
-          showMobileTawkWidget(true);
-          restoreMobileTawkPosition();
-        }
+      function backToCustomBubble() {
+        document.body.classList.remove('tawk-chat-open');
+        showMobileTawkWidget(true);
+        restoreMobileTawkPosition();
+
+        try {
+          if (typeof Tawk_API.hideWidget === 'function') {
+            Tawk_API.hideWidget();
+          }
+        } catch (e) {}
       }
 
       function openMobileTawkChat() {
-        showMobileTawkWidget(false);
-        if (typeof Tawk_API.maximize === 'function') {
-          Tawk_API.maximize();
-        } else if (typeof Tawk_API.start === 'function') {
-          Tawk_API.start();
+        if (!tawkReady) {
+          setTimeout(function () {
+            if (tawkReady) openMobileTawkChat();
+          }, 300);
+          return;
         }
+
+        document.body.classList.add('tawk-chat-open');
+        showMobileTawkWidget(false);
+
+        try {
+          if (typeof Tawk_API.showWidget === 'function') Tawk_API.showWidget();
+          if (typeof Tawk_API.start === 'function') Tawk_API.start();
+          if (typeof Tawk_API.maximize === 'function') Tawk_API.maximize();
+          else if (typeof Tawk_API.toggle === 'function') Tawk_API.toggle();
+        } catch (e) {}
+
+        setTimeout(function () {
+          try {
+            if (typeof Tawk_API.isChatMaximized === 'function'
+                && !Tawk_API.isChatMaximized()
+                && typeof Tawk_API.toggle === 'function') {
+              Tawk_API.toggle();
+            }
+          } catch (e) {}
+        }, 400);
       }
 
       function openTawkChat() {
         openMobileTawkChat();
       }
 
-      Tawk_API.onBeforeLoad = function() {
-        hideNativeTawkWidget();
-      };
-
       Tawk_API.onLoad = function () {
-        hideNativeTawkWidget();
-        syncMobileTawkWidget();
+        tawkReady = true;
+        if (typeof Tawk_API.isChatMaximized === 'function' && Tawk_API.isChatMaximized()) {
+          document.body.classList.add('tawk-chat-open');
+          showMobileTawkWidget(false);
+          if (typeof Tawk_API.showWidget === 'function') Tawk_API.showWidget();
+        } else {
+          backToCustomBubble();
+        }
       };
 
       Tawk_API.onChatMaximized = function () {
+        document.body.classList.add('tawk-chat-open');
         showMobileTawkWidget(false);
       };
 
-      Tawk_API.onChatMinimized = function () {
-        hideNativeTawkWidget();
-        showMobileTawkWidget(true);
-        restoreMobileTawkPosition();
-      };
+      Tawk_API.onChatMinimized = backToCustomBubble;
+      Tawk_API.onChatHidden = backToCustomBubble;
 
-      Tawk_API.onChatHidden = function () {
-        hideNativeTawkWidget();
-        showMobileTawkWidget(true);
-        restoreMobileTawkPosition();
-      };
-
-      window.addEventListener('resize', syncMobileTawkWidget);
+      window.addEventListener('resize', clampMobileTawkWidget);
 
       document.addEventListener('DOMContentLoaded', function () {
+        var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+        s1.async = true;
+        s1.src = 'https://embed.tawk.to/6a98b268451e133447599dcc/1k1l6h0rv';
+        s1.charset = 'UTF-8';
+        s1.setAttribute('crossorigin', '*');
+        if (s0 && s0.parentNode) {
+          s0.parentNode.insertBefore(s1, s0);
+        } else {
+          document.head.appendChild(s1);
+        }
+
         var widget = getMobileTawkWidget();
         var drag = null;
 
         if (!widget) return;
 
-        syncMobileTawkWidget();
+        showMobileTawkWidget(true);
+        restoreMobileTawkPosition();
 
         widget.addEventListener('pointerdown', function (event) {
           var rect = widget.getBoundingClientRect();
@@ -405,7 +405,6 @@
           };
           widget.setPointerCapture(event.pointerId);
           widget.classList.add('is-dragging');
-          event.preventDefault();
         });
 
         widget.addEventListener('pointermove', function (event) {
@@ -442,24 +441,7 @@
           widget.classList.remove('is-dragging');
           drag = null;
         });
-
-        widget.addEventListener('click', function (event) {
-          if (event.detail === 0) openMobileTawkChat();
-        });
       });
-
-      (function () {
-        var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
-        s1.async = true;
-        s1.src = 'https://embed.tawk.to/6a98b268451e133447599dcc/1k1l6h0rv';
-        s1.charset = 'UTF-8';
-        s1.setAttribute('crossorigin', '*');
-        if (s0 && s0.parentNode) {
-          s0.parentNode.insertBefore(s1, s0);
-        } else {
-          document.head.appendChild(s1);
-        }
-      })();
     </script>
 </head>
 <body>
